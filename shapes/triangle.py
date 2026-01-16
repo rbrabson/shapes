@@ -1,7 +1,6 @@
 """ Module to represent and calculate properties of triangles """
 from functools import total_ordering
 import math
-from typing import Self
 
 
 @total_ordering
@@ -82,14 +81,14 @@ class RightTriangle:
         """ Calculate cosecant of the angle """
         return self.hypotenuse() / self.opposite()
 
-    def __imul__(self, scale: float) -> Self:
+    def __imul__(self, scale: float):
         """ In-place scale the area of the triangle by a factor """
         self.a *= math.sqrt(scale)
         self.b *= math.sqrt(scale)
         self.c *= math.sqrt(scale)
         return self
 
-    def __itruediv__(self, scale: float) -> Self:
+    def __itruediv__(self, scale: float):
         """ In-place scale the area of the triangle down by a factor """
         self *= (1/scale)
         return self
