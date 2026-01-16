@@ -1,6 +1,5 @@
 """Test cases for RightTriangle class"""
 import math
-import pytest
 from shapes.triangle import RightTriangle
 
 
