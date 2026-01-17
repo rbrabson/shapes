@@ -107,7 +107,9 @@ class RightTriangle:
 
     def __eq__(self, other) -> bool:
         """ Equality comparison for RightTriangle """
-        return self.a == other.a and self.b == other.b and self.c == other.c
+        return (math.isclose(self.a, other.a) and
+                math.isclose(self.b, other.b) and
+                math.isclose(self.c, other.c))
 
     def __lt__(self, other) -> bool:
         """ Less-than comparison for RightTriangle based on area """
