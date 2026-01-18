@@ -227,7 +227,7 @@ class TestRightTriangleStringRepresentation:
     def test_repr(self):
         """Test __repr__ method"""
         triangle = RightTriangle(3, 4)
-        assert repr(triangle) == "3, 4, 5.0"
+        assert repr(triangle) == "a=3, b=4, c=5.0"
 
 
 class TestRightTriangleEdgeCases:

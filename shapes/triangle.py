@@ -7,7 +7,7 @@ import math
 class RightTriangle:
     """ RightTriangle class to represent a right-angled triangle """
 
-    def __init__(self, a: float, b: float) -> None:
+    def __init__(self, a: int | float, b: int | float) -> None:
         """ Initialize the RightTriangle with sides a and b
             Args:
                 a (float): length of the side opposite the angle
@@ -88,18 +88,18 @@ class RightTriangle:
         self.c *= math.sqrt(scale)
         return self
 
-    def __itruediv__(self, scale: float):
+    def __itruediv__(self, scale: int | float):
         """ In-place scale the area of the triangle down by a factor """
         self *= (1/scale)
         return self
 
-    def __mul__(self, scale: float):
+    def __mul__(self, scale: int | float):
         """ Scale the area of the triangle by a factor """
         new = RightTriangle(self.a, self.b)
         new *= scale
         return new
 
-    def __truediv__(self, scale: float) -> RightTriangle:
+    def __truediv__(self, scale: int | float) -> RightTriangle:
         """ Scale the area of the triangle down by a factor """
         new = RightTriangle(self.a, self.b)
         new /= scale

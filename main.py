@@ -30,6 +30,9 @@ def main():
     print("perimeter", triangle.perimeter())
     print("sin:", triangle.sin())
 
+    f = float(3)
+    print(f)
+
 
 # Using the special variable
 # __name__
