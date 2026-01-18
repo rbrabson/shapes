@@ -121,4 +121,4 @@ class RightTriangle:
 
     def __repr__(self) -> str:
         """ String representation of the RightTriangle """
-        return f"{self.a}, {self.b}, {self.c}"
+        return f"a={self.a}, b={self.b}, c={self.c}"
