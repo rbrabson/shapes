@@ -1,5 +1,5 @@
 """ Module to define a RightTriangle class and demonstrate its functionality """
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 
 def main():
