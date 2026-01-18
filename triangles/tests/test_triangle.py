@@ -1,6 +1,6 @@
 """Test cases for RightTriangle class"""
 import math
-from shapes import RightTriangle
+from triangles import RightTriangle
 
 
 class TestRightTriangleBasics:
