@@ -1,7 +1,7 @@
 """Test cases for Circle class"""
 import math
 import pytest
-from circle import Circle
+from shapes import Circle
 
 
 class TestCircleBasics:
