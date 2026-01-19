@@ -49,7 +49,7 @@ pip install -e ".[dev]"
 #### Basic Usage - Right Triangle
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 # Create a 3-4-5 right triangle
 triangle = RightTriangle(3, 4)
@@ -64,7 +64,7 @@ print(f"Area: {triangle.area()}")              # 6.0
 #### Acute Triangle
 
 ```python
-from shapes.triangle import AcuteTriangle
+from shapes import AcuteTriangle
 
 # Create an acute triangle (all angles < 90°)
 triangle = AcuteTriangle(5, 6, 7)
@@ -84,7 +84,7 @@ print(f"Altitude to side c: {triangle.altitude_c()}")
 #### Obtuse Triangle
 
 ```python
-from shapes.triangle import ObtuseTriangle
+from shapes import ObtuseTriangle
 
 # Create an obtuse triangle (one angle > 90°)
 triangle = ObtuseTriangle(3, 4, 6)
@@ -102,7 +102,7 @@ print(f"Obtuse angles: {len(obtuse_angles)}")        # 1
 #### Input Validation for Triangles
 
 ```python
-from shapes.triangle import AcuteTriangle, ObtuseTriangle
+from shapes import AcuteTriangle, ObtuseTriangle
 
 # Triangle inequality violation
 try:
@@ -125,7 +125,7 @@ except ValueError as e:
 #### Geometric Calculations
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 triangle = RightTriangle(3, 4)
 
@@ -139,7 +139,7 @@ print(f"Altitude: {triangle.altitude()}")            # 2.4
 #### Trigonometric Functions
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 triangle = RightTriangle(3, 4)
 
@@ -154,7 +154,7 @@ print(f"cot: {triangle.cot()}")      # 1.333
 #### Scaling Operations
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 triangle = RightTriangle(3, 4)
 original_area = triangle.area()  # 6.0
@@ -171,7 +171,7 @@ print(smaller.area())  # 3.0 (half the original area)
 #### Comparisons
 
 ```python
-from shapes.triangle import RightTriangle, AcuteTriangle, ObtuseTriangle
+from shapes import RightTriangle, AcuteTriangle, ObtuseTriangle
 
 t1 = RightTriangle(3, 4)          # area = 6
 t2 = AcuteTriangle(5, 6, 7)       # area ≈ 14.7
@@ -188,7 +188,7 @@ print(t1 == RightTriangle(3, 4))  # True
 #### Basic Usage
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 
 # Create a circle with radius 5
 circle = Circle(5)
@@ -203,7 +203,7 @@ print(f"Area: {circle.area()}")                # 78.54...
 #### Advanced Circle Calculations
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 import math
 
 circle = Circle(10)
@@ -228,7 +228,7 @@ print(f"Segment area (60°): {segment}")   # 13.09...
 #### Scaling Circles
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 
 circle = Circle(5)
 original_area = circle.area()  # ~78.54
@@ -250,7 +250,7 @@ print(f"New area: {circle.area()}")       # ~157.08
 #### Comparing Circles
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 
 c1 = Circle(3)   # area ≈ 28.27
 c2 = Circle(5)   # area ≈ 78.54
@@ -270,7 +270,7 @@ print([c.radius for c in circles])  # [3.0, 3.0, 5.0]
 #### Input Validation for Circles
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 
 # Negative radius
 try:
@@ -580,8 +580,8 @@ The `Circle` class provides:
 ### Working with Circles and Triangles Together
 
 ```python
-from shapes.circle import Circle
-from shapes.triangle import RightTriangle
+from shapes import Circle
+from shapes import RightTriangle
 import math
 
 # Create shapes
@@ -607,7 +607,7 @@ print(f"Circumscribed circle area: {circumscribed.area():.2f}")  # 19.63
 ### Circle Sectors and Segments
 
 ```python
-from shapes.circle import Circle
+from shapes import Circle
 import math
 
 # Pizza with 8 slices
@@ -629,7 +629,7 @@ print(f"Segment area: {segment:.2f} sq in")
 ### Working with Different Triangle Types
 
 ```python
-from shapes.triangle import RightTriangle, AcuteTriangle, ObtuseTriangle
+from shapes import RightTriangle, AcuteTriangle, ObtuseTriangle
 import math
 
 # Right triangle - Pythagorean triple
@@ -675,7 +675,7 @@ All types check the triangle inequality: `a + b > c`, `a + c > b`, `b + c > a`
 ### Special Right Triangles
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 import math
 
 # 45-45-90 triangle (isosceles)
@@ -692,7 +692,7 @@ print(f"Beta: {math.degrees(special.beta())}°")    # 60°
 ### Pythagorean Triples
 
 ```python
-from shapes.triangle import RightTriangle
+from shapes import RightTriangle
 
 # Famous Pythagorean triples
 triples = [(3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25)]
@@ -705,7 +705,7 @@ for a, b, c in triples:
 ### Scaling Triangles
 
 ```python
-from shapes.triangle import AcuteTriangle
+from shapes import AcuteTriangle
 
 # Create a triangle
 triangle = AcuteTriangle(3, 4, 4)
