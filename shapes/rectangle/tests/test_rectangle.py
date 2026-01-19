@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from shapes.rectangles.rectangle import Rectangle, Square
+from shapes.rectangle.rectangle import Rectangle, Square
 
 
 class TestRectangleBasics:

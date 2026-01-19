@@ -34,19 +34,19 @@ test-verbose:
 	$(PYTHON) -m pytest -v
 
 test-cov:
-	$(PYTHON) -m pytest --cov=shapes/triangle --cov=shapes/circle --cov=shapes/rectangles --cov-report=term-missing --cov-report=html
+	$(PYTHON) -m pytest --cov=shapes/triangle --cov=shapes/circle --cov=shapes/rectangle --cov-report=term-missing --cov-report=html
 
 lint:
-	$(PYTHON) -m ruff check shapes/triangle/ shapes/circle/ shapes/rectangles/
+	$(PYTHON) -m ruff check shapes/triangle/ shapes/circle/ shapes/rectangle/
 
 format:
-	$(PYTHON) -m black shapes/triangle/ shapes/circle/ shapes/rectangles/
+	$(PYTHON) -m black shapes/triangle/ shapes/circle/ shapes/rectangle/
 
 format-check:
-	$(PYTHON) -m black --check shapes/triangle/ shapes/circle/ shapes/rectangles/
+	$(PYTHON) -m black --check shapes/triangle/ shapes/circle/ shapes/rectangle/
 
 type-check:
-	$(PYTHON) -m mypy shapes/triangle/triangle.py shapes/circle/circle.py shapes/rectangles/rectangle.py
+	$(PYTHON) -m mypy shapes/triangle/triangle.py shapes/circle/circle.py shapes/rectangle/rectangle.py
 
 clean:
 	rm -rf build/

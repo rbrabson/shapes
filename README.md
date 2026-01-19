@@ -298,7 +298,7 @@ except ValueError as e:
 #### Basic Usage - Rectangle
 
 ```python
-from shapes.rectangles.rectangle import Rectangle
+from shapes.rectangle.rectangle import Rectangle
 
 # Create a rectangle
 rect = Rectangle(4, 6)
@@ -314,7 +314,7 @@ print(f"Diagonal: {rect.diagonal()}")        # 7.21...
 #### Advanced Rectangle Calculations
 
 ```python
-from shapes.rectangles.rectangle import Rectangle
+from shapes.rectangle.rectangle import Rectangle
 import math
 
 rect = Rectangle(16, 9)
@@ -351,7 +351,7 @@ print(f"Rotated: {rotated.width()} x {rotated.height()}")  # 6 x 4
 #### Square Usage
 
 ```python
-from shapes.rectangles.rectangle import Square
+from shapes.rectangle.rectangle import Square
 
 # Create a square
 square = Square(5)
@@ -368,7 +368,7 @@ print(f"Is square: {square.is_square()}")        # True
 #### Scaling Rectangles
 
 ```python
-from shapes.rectangles.rectangle import Rectangle, Square
+from shapes.rectangle.rectangle import Rectangle, Square
 
 rect = Rectangle(4, 6)
 original_area = rect.area()  # 24.0
@@ -395,7 +395,7 @@ print(f"Type preserved: {isinstance(scaled_square, Square)}")  # True
 #### Comparing Rectangles
 
 ```python
-from shapes.rectangles.rectangle import Rectangle, Square
+from shapes.rectangle.rectangle import Rectangle, Square
 
 r1 = Rectangle(4, 6)   # area = 24
 r2 = Rectangle(3, 8)   # area = 24
@@ -414,7 +414,7 @@ print(square.area() == rect.area())  # True (same area, different shapes)
 #### Input Validation for Rectangles
 
 ```python
-from shapes.rectangles.rectangle import Rectangle, Square
+from shapes.rectangle.rectangle import Rectangle, Square
 
 # Negative width
 try:

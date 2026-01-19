@@ -44,7 +44,7 @@ exclude = ["tests*", "*.tests*", "*.tests"]
 testpaths = [
     "shapes/triangle/tests",
     "shapes/circle/tests",
-    "shapes/rectangles/tests",
+    "shapes/rectangle/tests",
 ]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
