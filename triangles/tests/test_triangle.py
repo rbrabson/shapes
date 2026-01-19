@@ -1,6 +1,7 @@
-"""Test cases for RightTriangle class"""
+"""Test cases for Triangle classes"""
 import math
-from triangles import RightTriangle
+import pytest
+from triangles import RightTriangle, AcuteTriangle, ObtuseTriangle
 
 
 class TestRightTriangleBasics:
@@ -272,6 +273,323 @@ class TestRightTriangleEdgeCases:
             triangle = RightTriangle(a, b)
             assert math.isclose(triangle.c, expected_c)
             assert math.isclose(triangle.a**2 + triangle.b**2, triangle.c**2)
+
+
+class TestAcuteTriangleBasics:
+    """Test basic initialization and properties"""
+
+    def test_initialization(self):
+        """Test acute triangle initialization"""
+        triangle = AcuteTriangle(5, 6, 7)
+        assert triangle.a == 5
+        assert triangle.b == 6
+        assert triangle.c == 7
+
+    def test_invalid_triangle_inequality(self):
+        """Test that invalid triangles raise ValueError"""
+        with pytest.raises(ValueError, match="triangle inequality"):
+            AcuteTriangle(1, 2, 10)
+
+    def test_right_triangle_rejected(self):
+        """Test that right triangles are rejected"""
+        with pytest.raises(ValueError, match="acute"):
+            AcuteTriangle(3, 4, 5)
+
+    def test_obtuse_triangle_rejected(self):
+        """Test that obtuse triangles are rejected"""
+        with pytest.raises(ValueError, match="acute"):
+            AcuteTriangle(3, 4, 6)
+
+
+class TestAcuteTriangleGeometry:
+    """Test geometric calculations"""
+
+    def test_area(self):
+        """Test area calculation using Heron's formula"""
+        triangle = AcuteTriangle(5, 6, 7)
+        expected_area = 14.696938456699069
+        assert math.isclose(triangle.area(), expected_area)
+
+    def test_perimeter(self):
+        """Test perimeter calculation"""
+        triangle = AcuteTriangle(5, 6, 7)
+        assert triangle.perimeter() == 18
+
+    def test_inradius(self):
+        """Test inradius calculation"""
+        triangle = AcuteTriangle(5, 6, 7)
+        expected_inradius = triangle.area() / (0.5 * triangle.perimeter())
+        assert math.isclose(triangle.inradius(), expected_inradius)
+
+    def test_circumradius(self):
+        """Test circumradius calculation"""
+        triangle = AcuteTriangle(5, 6, 7)
+        expected_circumradius = (5 * 6 * 7) / (4 * triangle.area())
+        assert math.isclose(triangle.circumradius(), expected_circumradius)
+
+    def test_altitudes(self):
+        """Test altitude calculations"""
+        triangle = AcuteTriangle(5, 6, 7)
+        area = triangle.area()
+        assert math.isclose(triangle.altitude_a(), 2 * area / 5)
+        assert math.isclose(triangle.altitude_b(), 2 * area / 6)
+        assert math.isclose(triangle.altitude_c(), 2 * area / 7)
+
+
+class TestAcuteTriangleAngles:
+    """Test angle calculations"""
+
+    def test_angles_sum_to_pi(self):
+        """Test that angles sum to π radians"""
+        triangle = AcuteTriangle(5, 6, 7)
+        angle_sum = triangle.angle_a() + triangle.angle_b() + triangle.angle_c()
+        assert math.isclose(angle_sum, math.pi)
+
+    def test_all_angles_acute(self):
+        """Test that all angles are less than π/2"""
+        triangle = AcuteTriangle(5, 6, 7)
+        assert triangle.angle_a() < math.pi / 2
+        assert triangle.angle_b() < math.pi / 2
+        assert triangle.angle_c() < math.pi / 2
+
+    def test_equilateral_triangle(self):
+        """Test angles in an equilateral triangle"""
+        triangle = AcuteTriangle(5, 5, 5)
+        expected_angle = math.pi / 3  # 60 degrees
+        assert math.isclose(triangle.angle_a(), expected_angle)
+        assert math.isclose(triangle.angle_b(), expected_angle)
+        assert math.isclose(triangle.angle_c(), expected_angle)
+
+
+class TestAcuteTriangleScaling:
+    """Test scaling operations"""
+
+    def test_multiply_scale_area(self):
+        """Test multiplication scaling"""
+        triangle = AcuteTriangle(5, 6, 7)
+        original_area = triangle.area()
+        scaled = triangle * 4
+        assert math.isclose(scaled.area(), original_area * 4)
+
+    def test_imul_scale_area(self):
+        """Test in-place multiplication scaling"""
+        triangle = AcuteTriangle(5, 6, 7)
+        original_area = triangle.area()
+        triangle *= 4
+        assert math.isclose(triangle.area(), original_area * 4)
+
+    def test_divide_scale_area(self):
+        """Test division scaling"""
+        triangle = AcuteTriangle(5, 6, 7)
+        original_area = triangle.area()
+        scaled = triangle / 4
+        assert math.isclose(scaled.area(), original_area / 4)
+
+    def test_scaling_preserves_acute_property(self):
+        """Test that scaling maintains acute triangle property"""
+        triangle = AcuteTriangle(5, 6, 7)
+        scaled = triangle * 2
+        # All angles should still be acute
+        assert scaled.angle_a() < math.pi / 2
+        assert scaled.angle_b() < math.pi / 2
+        assert scaled.angle_c() < math.pi / 2
+
+
+class TestAcuteTriangleComparison:
+    """Test comparison operations"""
+
+    def test_equality(self):
+        """Test equality comparison"""
+        t1 = AcuteTriangle(5, 6, 7)
+        t2 = AcuteTriangle(5, 6, 7)
+        assert t1 == t2
+
+    def test_inequality(self):
+        """Test inequality"""
+        t1 = AcuteTriangle(5, 6, 7)
+        t2 = AcuteTriangle(3, 4, 4)
+        assert t1 != t2
+
+    def test_less_than_by_area(self):
+        """Test less than comparison based on area"""
+        t1 = AcuteTriangle(3, 4, 4)
+        t2 = AcuteTriangle(5, 6, 7)
+        assert t1 < t2
+
+    def test_greater_than_by_area(self):
+        """Test greater than comparison based on area"""
+        t1 = AcuteTriangle(5, 6, 7)
+        t2 = AcuteTriangle(3, 4, 4)
+        assert t1 > t2
+
+
+class TestObtuseTriangleBasics:
+    """Test basic initialization and properties"""
+
+    def test_initialization(self):
+        """Test obtuse triangle initialization"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        assert triangle.a == 3
+        assert triangle.b == 4
+        assert triangle.c == 6
+
+    def test_invalid_triangle_inequality(self):
+        """Test that invalid triangles raise ValueError"""
+        with pytest.raises(ValueError, match="triangle inequality"):
+            ObtuseTriangle(1, 2, 10)
+
+    def test_right_triangle_rejected(self):
+        """Test that right triangles are rejected"""
+        with pytest.raises(ValueError, match="obtuse"):
+            ObtuseTriangle(3, 4, 5)
+
+    def test_acute_triangle_rejected(self):
+        """Test that acute triangles are rejected"""
+        with pytest.raises(ValueError, match="obtuse"):
+            ObtuseTriangle(5, 6, 7)
+
+
+class TestObtuseTriangleGeometry:
+    """Test geometric calculations"""
+
+    def test_area(self):
+        """Test area calculation using Heron's formula"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        s = 13 / 2
+        expected_area = math.sqrt(s * (s - 3) * (s - 4) * (s - 6))
+        assert math.isclose(triangle.area(), expected_area)
+
+    def test_perimeter(self):
+        """Test perimeter calculation"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        assert triangle.perimeter() == 13
+
+    def test_inradius(self):
+        """Test inradius calculation"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        expected_inradius = triangle.area() / (0.5 * triangle.perimeter())
+        assert math.isclose(triangle.inradius(), expected_inradius)
+
+    def test_circumradius(self):
+        """Test circumradius calculation"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        expected_circumradius = (3 * 4 * 6) / (4 * triangle.area())
+        assert math.isclose(triangle.circumradius(), expected_circumradius)
+
+    def test_altitudes(self):
+        """Test altitude calculations"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        area = triangle.area()
+        assert math.isclose(triangle.altitude_a(), 2 * area / 3)
+        assert math.isclose(triangle.altitude_b(), 2 * area / 4)
+        assert math.isclose(triangle.altitude_c(), 2 * area / 6)
+
+
+class TestObtuseTriangleAngles:
+    """Test angle calculations"""
+
+    def test_angles_sum_to_pi(self):
+        """Test that angles sum to π radians"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        angle_sum = triangle.angle_a() + triangle.angle_b() + triangle.angle_c()
+        assert math.isclose(angle_sum, math.pi)
+
+    def test_one_angle_obtuse(self):
+        """Test that exactly one angle is greater than π/2"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        angles = [triangle.angle_a(), triangle.angle_b(), triangle.angle_c()]
+        obtuse_count = sum(1 for angle in angles if angle > math.pi / 2)
+        assert obtuse_count == 1
+
+    def test_largest_side_opposite_obtuse_angle(self):
+        """Test that the largest side is opposite the obtuse angle"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        # c=6 is the largest side, so angle_c should be obtuse
+        assert triangle.angle_c() > math.pi / 2
+
+
+class TestObtuseTriangleScaling:
+    """Test scaling operations"""
+
+    def test_multiply_scale_area(self):
+        """Test multiplication scaling"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        original_area = triangle.area()
+        scaled = triangle * 4
+        assert math.isclose(scaled.area(), original_area * 4)
+
+    def test_imul_scale_area(self):
+        """Test in-place multiplication scaling"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        original_area = triangle.area()
+        triangle *= 4
+        assert math.isclose(triangle.area(), original_area * 4)
+
+    def test_divide_scale_area(self):
+        """Test division scaling"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        original_area = triangle.area()
+        scaled = triangle / 4
+        assert math.isclose(scaled.area(), original_area / 4)
+
+    def test_scaling_preserves_obtuse_property(self):
+        """Test that scaling maintains obtuse triangle property"""
+        triangle = ObtuseTriangle(3, 4, 6)
+        scaled = triangle * 2
+        # Should still have exactly one obtuse angle
+        angles = [scaled.angle_a(), scaled.angle_b(), scaled.angle_c()]
+        obtuse_count = sum(1 for angle in angles if angle > math.pi / 2)
+        assert obtuse_count == 1
+
+
+class TestObtuseTriangleComparison:
+    """Test comparison operations"""
+
+    def test_equality(self):
+        """Test equality comparison"""
+        t1 = ObtuseTriangle(3, 4, 6)
+        t2 = ObtuseTriangle(3, 4, 6)
+        assert t1 == t2
+
+    def test_inequality(self):
+        """Test inequality"""
+        t1 = ObtuseTriangle(3, 4, 6)
+        t2 = ObtuseTriangle(2, 3, 4)
+        assert t1 != t2
+
+    def test_less_than_by_area(self):
+        """Test less than comparison based on area"""
+        t1 = ObtuseTriangle(2, 3, 4)
+        t2 = ObtuseTriangle(3, 4, 6)
+        assert t1 < t2
+
+    def test_greater_than_by_area(self):
+        """Test greater than comparison based on area"""
+        t1 = ObtuseTriangle(3, 4, 6)
+        t2 = ObtuseTriangle(2, 3, 4)
+        assert t1 > t2
+
+
+class TestTriangleCrossComparison:
+    """Test comparisons between different triangle types"""
+
+    def test_compare_right_and_acute(self):
+        """Test comparison between right and acute triangles"""
+        right = RightTriangle(3, 4)
+        acute = AcuteTriangle(5, 6, 7)
+        assert right < acute  # right has area 6, acute has area ~14.7
+
+    def test_compare_right_and_obtuse(self):
+        """Test comparison between right and obtuse triangles"""
+        right = RightTriangle(3, 4)
+        obtuse = ObtuseTriangle(3, 4, 6)
+        assert right > obtuse  # right has area 6, obtuse has area ~5.3
+
+    def test_compare_acute_and_obtuse(self):
+        """Test comparison between acute and obtuse triangles"""
+        acute = AcuteTriangle(5, 6, 7)
+        obtuse = ObtuseTriangle(3, 4, 6)
+        assert acute > obtuse  # acute has area ~14.7, obtuse has area ~5.3
 
 
 if __name__ == "__main__":

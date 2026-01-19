@@ -1,14 +1,18 @@
-# RightTriangle Package
+# Triangles Package
 
-A Python package for working with right-angled triangles, providing comprehensive geometric and trigonometric calculations.
+A Python package for working with triangles, providing comprehensive geometric calculations for right-angled, acute, and obtuse triangles.
 
 ## Features
 
-- **Geometric Properties**: Calculate area, perimeter, inradius, circumradius, and altitude
-- **Trigonometric Functions**: Compute sin, cos, tan, sec, csc, cot, and angles (alpha, beta)
+- **Multiple Triangle Types**: Support for `RightTriangle`, `AcuteTriangle`, and `ObtuseTriangle`
+- **Object-Oriented Design**: Base `Triangle` class with inheritance hierarchy
+- **Geometric Properties**: Calculate area, perimeter, inradius, circumradius, and altitudes
+- **Angle Calculations**: Compute all angles using law of cosines
+- **Trigonometric Functions**: Full set of trig functions for right triangles
 - **Scaling Operations**: Scale triangles by area with intuitive operators (`*`, `/`, `*=`, `/=`)
 - **Comparisons**: Compare triangles by area with full ordering support
-- **Type Safety**: Full type hints using Python's typing module
+- **Type Safety**: Full type hints using Python's typing module with `Self` support
+- **Input Validation**: Automatic validation of triangle inequality and angle constraints
 
 ## Installation
 
@@ -29,10 +33,10 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Usage
+### Basic Usage - Right Triangle
 
 ```python
-from shapes.triangle import RightTriangle
+from triangles import RightTriangle
 
 # Create a 3-4-5 right triangle
 triangle = RightTriangle(3, 4)
@@ -41,6 +45,68 @@ triangle = RightTriangle(3, 4)
 print(f"Opposite: {triangle.opposite()}")      # 3
 print(f"Adjacent: {triangle.adjacent()}")      # 4
 print(f"Hypotenuse: {triangle.hypotenuse()}")  # 5.0
+print(f"Area: {triangle.area()}")              # 6.0
+```
+
+### Acute Triangle
+
+```python
+from triangles import AcuteTriangle
+
+# Create an acute triangle (all angles < 90°)
+triangle = AcuteTriangle(5, 6, 7)
+
+print(f"Area: {triangle.area()}")                    # ~14.70
+print(f"Perimeter: {triangle.perimeter()}")          # 18
+print(f"Angle A: {triangle.angle_a()}")              # radians
+print(f"Angle B: {triangle.angle_b()}")              # radians
+print(f"Angle C: {triangle.angle_c()}")              # radians
+
+# Get altitudes
+print(f"Altitude to side a: {triangle.altitude_a()}")
+print(f"Altitude to side b: {triangle.altitude_b()}")
+print(f"Altitude to side c: {triangle.altitude_c()}")
+```
+
+### Obtuse Triangle
+
+```python
+from triangles import ObtuseTriangle
+
+# Create an obtuse triangle (one angle > 90°)
+triangle = ObtuseTriangle(3, 4, 6)
+
+print(f"Area: {triangle.area()}")                    # ~5.33
+print(f"Perimeter: {triangle.perimeter()}")          # 13
+print(f"Circumradius: {triangle.circumradius()}")    # radius of circumscribed circle
+
+# Check angles
+angles = [triangle.angle_a(), triangle.angle_b(), triangle.angle_c()]
+obtuse_angles = [a for a in angles if a > 1.5708]  # > π/2
+print(f"Obtuse angles: {len(obtuse_angles)}")        # 1
+```
+
+### Input Validation
+
+```python
+from triangles import AcuteTriangle, ObtuseTriangle
+
+# Triangle inequality violation
+try:
+    triangle = AcuteTriangle(1, 2, 10)
+except ValueError as e:
+    print(e)  # "Sides must satisfy triangle inequality"
+
+# Wrong triangle type
+try:
+    triangle = AcuteTriangle(3, 4, 5)  # This is a right triangle
+except ValueError as e:
+    print(e)  # "All angles must be acute (less than 90 degrees)"
+
+try:
+    triangle = ObtuseTriangle(5, 6, 7)  # This is an acute triangle
+except ValueError as e:
+    print(e)  # "Exactly one angle must be obtuse (greater than 90 degrees)"
 ```
 
 ### Geometric Calculations
@@ -89,19 +155,45 @@ print(triangle.area())  # 12.0
 ### Comparisons
 
 ```python
-t1 = RightTriangle(3, 4)   # area = 6
-t2 = RightTriangle(5, 12)  # area = 30
-t3 = RightTriangle(3, 4)   # area = 6
+from triangles import RightTriangle, AcuteTriangle, ObtuseTriangle
 
-print(t1 == t3)  # True
-print(t1 < t2)   # True (compared by area)
-print(t2 > t1)   # True
-print(t1 <= t3)  # True
+t1 = RightTriangle(3, 4)          # area = 6
+t2 = AcuteTriangle(5, 6, 7)       # area ≈ 14.7
+t3 = ObtuseTriangle(3, 4, 6)      # area ≈ 5.33
+
+# Compare by area
+print(t1 > t3)   # True (6 > 5.33)
+print(t2 > t1)   # True (14.7 > 6)
+print(t1 == RightTriangle(3, 4))  # True
+
+# Works across triangle types
+triangles = [t1, t2, t3]
+triangles.sort()  # Sorts by area
+print([t.area() for t in triangles])  # [~5.33, 6.0, ~14.7]
 ```
 
 ## API Reference
 
-### Constructor
+### Triangle (Base Class)
+
+Abstract base class for all triangle types.
+
+**Common Properties:**
+
+- `a`, `b`, `c`: Side lengths
+
+**Common Methods:**
+
+- `area() -> float`: Triangle area (abstract, implemented by subclasses)
+- `perimeter() -> float`: Triangle perimeter
+- `inradius() -> float`: Radius of inscribed circle
+
+**Common Operators:**
+
+- `*`, `/`, `*=`, `/=`: Scaling operations
+- `==`, `!=`, `<`, `>`, `<=`, `>=`: Comparison operators
+
+### RightTriangle
 
 ```python
 RightTriangle(a: float, b: float)
@@ -111,41 +203,59 @@ Creates a right triangle with:
 
 - `a`: length of the opposite side
 - `b`: length of the adjacent side
-- `c`: automatically calculated hypotenuse
+- `c`: automatically calculated hypotenuse (√(a² + b²))
 
-### Properties
+**Unique Methods:**
 
 - `opposite() -> float`: Returns the opposite side length
 - `adjacent() -> float`: Returns the adjacent side length
 - `hypotenuse() -> float`: Returns the hypotenuse length
-
-### Geometric Methods
-
-- `area() -> float`: Triangle area
-- `perimeter() -> float`: Triangle perimeter
-- `inradius() -> float`: Radius of inscribed circle
-- `circumradius() -> float`: Radius of circumscribed circle
 - `altitude() -> float`: Altitude from right angle to hypotenuse
+- Trigonometric: `sin()`, `cos()`, `tan()`, `sec()`, `csc()`, `cot()`
+- Angles: `alpha()`, `beta()` in radians
 
-### Trigonometric Methods
+### AcuteTriangle
 
-- `sin() -> float`: Sine of angle alpha
-- `cos() -> float`: Cosine of angle alpha
-- `tan() -> float`: Tangent of angle alpha
-- `sec() -> float`: Secant of angle alpha
-- `csc() -> float`: Cosecant of angle alpha
-- `cot() -> float`: Cotangent of angle alpha
-- `alpha() -> float`: Angle in radians (opposite/adjacent)
-- `beta() -> float`: Complementary angle in radians
+```python
+AcuteTriangle(a: float, b: float, c: float)
+```
 
-### Operators
+Creates an acute triangle where all angles are less than 90°.
 
-- `*`: Scale triangle by area (returns new triangle)
-- `/`: Scale down triangle by area (returns new triangle)
-- `*=`: In-place scale by area
-- `/=`: In-place scale down by area
-- `==`, `!=`: Equality comparison
-- `<`, `>`, `<=`, `>=`: Ordering by area
+**Validation:** Raises `ValueError` if:
+
+- Triangle inequality is violated
+- Any angle is ≥ 90° (not acute)
+
+**Unique Methods:**
+
+- `circumradius() -> float`: Radius of circumscribed circle
+- `altitude_a() -> float`: Altitude to side a
+- `altitude_b() -> float`: Altitude to side b
+- `altitude_c() -> float`: Altitude to side c
+- `angle_a() -> float`: Angle opposite side a (radians)
+- `angle_b() -> float`: Angle opposite side b (radians)
+- `angle_c() -> float`: Angle opposite side c (radians)
+
+### ObtuseTriangle
+
+```python
+ObtuseTriangle(a: float, b: float, c: float)
+```
+
+Creates an obtuse triangle where exactly one angle is greater than 90°.
+
+**Validation:** Raises `ValueError` if:
+
+- Triangle inequality is violated
+- Zero or multiple angles are obtuse
+
+**Unique Methods:**
+Same as `AcuteTriangle`:
+
+- `circumradius() -> float`: Radius of circumscribed circle
+- `altitude_a()`, `altitude_b()`, `altitude_c() -> float`: Altitudes
+- `angle_a()`, `angle_b()`, `angle_c() -> float`: Angles in radians
 
 ## Testing
 
@@ -153,16 +263,20 @@ Run the comprehensive test suite:
 
 ```bash
 # Run all tests
-pytest shapes/tests/test_triangle.py -v
+pytest triangles/tests/test_triangle.py -v
 
-# Run specific test class
-pytest shapes/tests/test_triangle.py::TestRightTriangleTrigonometry -v
+# Run tests for specific triangle type
+pytest triangles/tests/test_triangle.py::TestRightTriangle -v
+pytest triangles/tests/test_triangle.py::TestAcuteTriangle -v
+pytest triangles/tests/test_triangle.py::TestObtuseTriangle -v
 
 # Run with coverage
-pytest shapes/tests/test_triangle.py --cov=shapes.triangle
+pytest triangles/tests/test_triangle.py --cov=triangles.triangle
 ```
 
-The test suite includes 40+ tests covering:
+The test suite includes 83 tests covering:
+
+**RightTriangle (40 tests):**
 
 - Basic initialization and properties
 - Geometric calculations
@@ -172,20 +286,61 @@ The test suite includes 40+ tests covering:
 - String representations
 - Edge cases (special triangles, extreme values)
 
+**AcuteTriangle (20 tests):**
+
+- Initialization and validation
+- Geometric calculations (area, perimeter, radii, altitudes)
+- Angle calculations and validation
+- Scaling operations
+- Comparison operators
+
+**ObtuseTriangle (20 tests):**
+
+- Initialization and validation
+- Geometric calculations
+- Angle calculations (ensuring one obtuse angle)
+- Scaling operations
+- Comparison operators
+
+**Cross-type comparisons (3 tests):**
+
+- Comparing different triangle types by area
+
 ## Project Structure
 
-``` code
+```
 .
-├── shapes/
-│   ├── __init__.py
-│   ├── triangle.py          # RightTriangle class implementation
+├── triangles/
+│   ├── __init__.py          # Exports Triangle, RightTriangle, AcuteTriangle, ObtuseTriangle
+│   ├── triangle.py          # Triangle base class and implementations
 │   └── tests/
 │       ├── __init__.py
-│       └── test_triangle.py # Comprehensive test suite
-├── main.py
-├── .gitignore
-└── README.md
+│       └── test_triangle.py # Comprehensive test suite (83 tests)
+├── README.md
+└── requirements.txt
 ```
+
+## Class Hierarchy
+
+```
+Triangle (ABC)
+├── RightTriangle
+├── AcuteTriangle
+└── ObtuseTriangle
+```
+
+The `Triangle` base class provides common functionality:
+
+- Side storage (`a`, `b`, `c`)
+- Perimeter and inradius calculations
+- Comparison operators (`==`, `<`, etc.)
+- Scaling operators (`*=`, `/=`)
+
+Each subclass implements:
+
+- Specific `area()` calculation
+- Validation logic in `__init__`
+- Type-specific geometric calculations
 
 ## Requirements
 
@@ -202,14 +357,67 @@ MIT License
 Contributions are welcome! Please ensure all tests pass before submitting a pull request.
 
 ```bash
-# Run tests
-pytest shapes/tests/test_triangle.py -v
+# Run all tests
+pytest triangles/tests/test_triangle.py -v
 
-# Check code style
-flake8 shapes/
+# Check for type errors
+python -m mypy triangles/triangle.py
+
+# Format code (if using black)
+black triangles/
 ```
 
+## Design Notes
+
+### Inheritance Hierarchy
+
+The package uses an abstract base class `Triangle` to share common functionality across all triangle types, reducing code duplication and ensuring consistent behavior.
+
+### Type Safety
+
+The package uses Python 3.10+ type hints, including:
+
+- `Self` type for proper return type inference in methods
+- Abstract methods to enforce implementation in subclasses
+- Union types (`int | float`) for flexible numeric inputs
+
+### Validation Strategy
+
+Each triangle type validates its constraints:
+
+- **RightTriangle**: Automatically calculates hypotenuse (no validation needed)
+- **AcuteTriangle**: Validates all angles < 90° using law of cosines
+- **ObtuseTriangle**: Validates exactly one angle > 90°
+
+All types check the triangle inequality: `a + b > c`, `a + c > b`, `b + c > a`
+
 ## Examples
+
+### Working with Different Triangle Types
+
+```python
+from triangles import RightTriangle, AcuteTriangle, ObtuseTriangle
+import math
+
+# Right triangle - Pythagorean triple
+right = RightTriangle(3, 4)
+print(f"Right triangle area: {right.area()}")           # 6.0
+print(f"sin(alpha): {right.sin()}")                     # 0.6
+
+# Acute triangle - Equilateral
+side = 5
+equilateral = AcuteTriangle(side, side, side)
+print(f"Equilateral area: {equilateral.area()}")        # ~10.83
+angle = equilateral.angle_a()
+print(f"Each angle: {math.degrees(angle)}°")            # 60°
+
+# Obtuse triangle
+obtuse = ObtuseTriangle(3, 4, 6)
+print(f"Obtuse area: {obtuse.area()}")                  # ~5.33
+angles = [obtuse.angle_a(), obtuse.angle_b(), obtuse.angle_c()]
+obtuse_angle = max(angles)
+print(f"Largest angle: {math.degrees(obtuse_angle)}°")  # ~117°
+```
 
 ### Special Right Triangles
 
@@ -222,6 +430,8 @@ print(f"Hypotenuse: {iso.hypotenuse()}")  # √2 ≈ 1.414
 import math
 special = RightTriangle(1, math.sqrt(3))
 print(f"Hypotenuse: {special.hypotenuse()}")  # 2.0
+print(f"Alpha: {math.degrees(special.alpha())}°")  # 30°
+print(f"Beta: {math.degrees(special.beta())}°")    # 60°
 ```
 
 ### Pythagorean Triples
@@ -233,4 +443,25 @@ triples = [(3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25)]
 for a, b, c in triples:
     triangle = RightTriangle(a, b)
     print(f"{a}-{b}-{c}: hypotenuse = {triangle.hypotenuse()}")
+```
+
+### Scaling Triangles
+
+```python
+from triangles import AcuteTriangle
+
+# Create a triangle
+triangle = AcuteTriangle(3, 4, 4)
+original_area = triangle.area()
+
+# Scale up - doubles the area
+scaled = triangle * 2
+print(f"Original: {original_area:.2f}, Scaled: {scaled.area():.2f}")
+
+# Scaling maintains triangle type properties
+print(f"Still acute: {all([
+    scaled.angle_a() < 1.5708,  # π/2
+    scaled.angle_b() < 1.5708,
+    scaled.angle_c() < 1.5708
+])}")  # True
 ```
