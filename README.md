@@ -29,8 +29,8 @@ A Python package for working with geometric shapes, providing comprehensive calc
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd test
+git clone https://github.com/rbrabson/shapes.git
+cd shapes
 
 # Create and activate virtual environment
 python -m venv .venv
@@ -38,8 +38,8 @@ source .venv/bin/activate  # On macOS/Linux
 # or
 .venv\Scripts\activate  # On Windows
 
-# Install dependencies
-pip install -r requirements.txt
+# Install the package in development mode
+pip install -e ".[dev]"
 ```
 
 ## Usage
