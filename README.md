@@ -285,7 +285,7 @@ except ValueError as e:
     print(e)  # "Radius must be positive"
 ```
 
-## API Reference
+## API Reference for Circles
 
 ### Circle
 
@@ -327,7 +327,7 @@ Creates a circle with the specified radius.
 - `str(circle)`: Returns "Circle(radius=r)"
 - `repr(circle)`: Returns "Circle(radius=r)"
 
-## API Reference
+## API Reference for Triangles
 
 ### Triangle (Base Class)
 
@@ -499,7 +499,7 @@ The test suite includes 139 tests covering:
 
 ## Project Structure
 
-```
+``` code
 .
 ├── shapes/
 │   ├── __init__.py
@@ -525,7 +525,7 @@ The test suite includes 139 tests covering:
 
 **Triangles:**
 
-```
+``` code
 Triangle (ABC)
 ├── RightTriangle
 ├── AcuteTriangle
@@ -534,7 +534,7 @@ Triangle (ABC)
 
 **Circles:**
 
-```
+``` code
 Circle (standalone class)
 ```
 
@@ -564,7 +564,7 @@ Each subclass implements:
 python -m mypy shapes/triangle/triangle.py shapes/circle/circle.py
 ```
 
-## Design Notes
+## Design Notes for the Shapes Package
 
 ## Circle Design
 
@@ -652,7 +652,7 @@ obtuse_angle = max(angles)
 print(f"Largest angle: {math.degrees(obtuse_angle)}°")  # ~117°
 ```
 
-## Design Notes
+## Design Notes Triangles
 
 ### Type Safety
 
