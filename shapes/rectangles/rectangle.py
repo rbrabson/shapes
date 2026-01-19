@@ -2,7 +2,15 @@
 
 import math
 from functools import total_ordering
-from typing import Self
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
+else:
+    try:
+        from typing import Self
+    except ImportError:
+        from typing_extensions import Self
 
 
 @total_ordering
@@ -100,7 +108,7 @@ class Rectangle:
 
     def __itruediv__(self, scale: int | float) -> Self:
         """In-place scale the area of the rectangle down by a factor"""
-        self *= 1 / scale
+        self *= 1 / scale  # type: ignore[assignment]
         return self
 
     def __mul__(self, scale: int | float) -> "Rectangle":
@@ -115,18 +123,20 @@ class Rectangle:
         new /= scale
         return new
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Equality comparison for Rectangle"""
         if not isinstance(other, Rectangle):
-            raise TypeError("Can only compare Rectangle with another Rectangle")
+            raise TypeError(
+                "Can only compare Rectangle with another Rectangle")
         return math.isclose(self._width, other.width()) and math.isclose(
             self._height, other.height()
         )
 
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other: object) -> bool:
         """Less-than comparison for Rectangle based on area"""
         if not isinstance(other, Rectangle):
-            raise TypeError("Can only compare Rectangle with another Rectangle")
+            raise TypeError(
+                "Can only compare Rectangle with another Rectangle")
         # Use a small threshold for floating point comparison
         # to avoid issues with numerically equal areas
         area_diff = self.area() - other.area()

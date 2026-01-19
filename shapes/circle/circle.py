@@ -2,7 +2,15 @@
 
 import math
 from functools import total_ordering
-from typing import Self
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
+else:
+    try:
+        from typing import Self
+    except ImportError:
+        from typing_extensions import Self
 
 
 @total_ordering
@@ -71,7 +79,7 @@ class Circle:
 
     def __itruediv__(self, scale: int | float) -> Self:
         """In-place scale the area of the circle down by a factor"""
-        self *= 1 / scale
+        self *= 1 / scale  # type: ignore[assignment]
         return self
 
     def __mul__(self, scale: int | float) -> "Circle":
@@ -86,13 +94,13 @@ class Circle:
         new /= scale
         return new
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Equality comparison for Circle"""
         if not isinstance(other, Circle):
             raise TypeError("Can only compare Circle with another Circle")
         return math.isclose(self._radius, other.radius())
 
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other: object) -> bool:
         """Less-than comparison for Circle based on area"""
         if not isinstance(other, Circle):
             raise TypeError("Can only compare Circle with another Circle")

@@ -3,7 +3,15 @@
 import math
 from abc import ABC, abstractmethod
 from functools import total_ordering
-from typing import Self
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
+else:
+    try:
+        from typing import Self
+    except ImportError:
+        from typing_extensions import Self
 
 
 @total_ordering
@@ -54,10 +62,10 @@ class Triangle(ABC):
 
     def __itruediv__(self, scale: int | float) -> Self:
         """In-place scale the area of the triangle down by a factor"""
-        self *= 1 / scale
+        self *= 1 / scale  # type: ignore[operator, assignment]
         return self
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Equality comparison for Triangle based on the side lengths"""
         if not isinstance(other, Triangle):
             raise TypeError("Can only compare Triangle with another Triangle")
@@ -67,7 +75,7 @@ class Triangle(ABC):
             and math.isclose(self.c, other.c)
         )
 
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other: object) -> bool:
         """Less-than comparison for Triangle based on area"""
         if not isinstance(other, Triangle):
             raise TypeError("Can only compare Triangle with another Triangle")
@@ -284,9 +292,11 @@ class ObtuseTriangle(Triangle):
 
         # Check that exactly one angle is obtuse (using law of cosines)
         # For an obtuse triangle: one of a² + b² < c², a² + c² < b², or b² + c² < a² must be true
-        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c**2 < b**2, b**2 + c**2 < a**2])
+        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c **
+                           2 < b**2, b**2 + c**2 < a**2])
         if obtuse_count != 1:
-            raise ValueError("Exactly one angle must be obtuse (greater than 90 degrees)")
+            raise ValueError(
+                "Exactly one angle must be obtuse (greater than 90 degrees)")
 
         super().__init__(a, b, c)
 
