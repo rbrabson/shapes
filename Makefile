@@ -1,5 +1,8 @@
 .PHONY: help install install-dev test test-verbose test-cov lint format type-check clean build all
 
+PYTHON := .venv/bin/python
+PIP := .venv/bin/pip
+
 help:
 	@echo "Shapes Package - Available Make Commands"
 	@echo "=========================================="
@@ -18,32 +21,32 @@ help:
 	@echo "all            - Run format, lint, type-check, and test"
 
 install:
-	pip install -e .
+	$(PIP) install -e .
 
 install-dev:
-	pip install -r dev-requirements.txt
-	pip install -e .
+	$(PIP) install -r dev-requirements.txt
+	$(PIP) install -e .
 
 test:
-	pytest
+	$(PYTHON) -m pytest
 
 test-verbose:
-	pytest -v
+	$(PYTHON) -m pytest -v
 
 test-cov:
-	pytest --cov=triangle --cov=circle --cov-report=term-missing --cov-report=html
+	$(PYTHON) -m pytest --cov=shapes/triangle --cov=shapes/circle --cov-report=term-missing --cov-report=html
 
 lint:
-	ruff check triangle/ circle/
+	$(PYTHON) -m ruff check shapes/triangle/ shapes/circle/
 
 format:
-	black triangle/ circle/
+	$(PYTHON) -m black shapes/triangle/ shapes/circle/
 
 format-check:
-	black --check triangle/ circle/
+	$(PYTHON) -m black --check shapes/triangle/ shapes/circle/
 
 type-check:
-	mypy triangle/triangle.py circle/circle.py
+	$(PYTHON) -m mypy shapes/triangle/triangle.py shapes/circle/circle.py
 
 clean:
 	rm -rf build/
@@ -58,7 +61,7 @@ clean:
 	find . -type f -name "*.pyc" -delete
 
 build: clean
-	python -m build
+	$(PYTHON) -m build
 
 all: format lint type-check test
 	@echo "✓ All checks passed!"
