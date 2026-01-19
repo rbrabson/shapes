@@ -292,11 +292,9 @@ class ObtuseTriangle(Triangle):
 
         # Check that exactly one angle is obtuse (using law of cosines)
         # For an obtuse triangle: one of a² + b² < c², a² + c² < b², or b² + c² < a² must be true
-        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c **
-                           2 < b**2, b**2 + c**2 < a**2])
+        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c**2 < b**2, b**2 + c**2 < a**2])
         if obtuse_count != 1:
-            raise ValueError(
-                "Exactly one angle must be obtuse (greater than 90 degrees)")
+            raise ValueError("Exactly one angle must be obtuse (greater than 90 degrees)")
 
         super().__init__(a, b, c)
 

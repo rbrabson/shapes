@@ -126,8 +126,7 @@ class Rectangle:
     def __eq__(self, other: object) -> bool:
         """Equality comparison for Rectangle"""
         if not isinstance(other, Rectangle):
-            raise TypeError(
-                "Can only compare Rectangle with another Rectangle")
+            raise TypeError("Can only compare Rectangle with another Rectangle")
         return math.isclose(self._width, other.width()) and math.isclose(
             self._height, other.height()
         )
@@ -135,8 +134,7 @@ class Rectangle:
     def __lt__(self, other: object) -> bool:
         """Less-than comparison for Rectangle based on area"""
         if not isinstance(other, Rectangle):
-            raise TypeError(
-                "Can only compare Rectangle with another Rectangle")
+            raise TypeError("Can only compare Rectangle with another Rectangle")
         # Use a small threshold for floating point comparison
         # to avoid issues with numerically equal areas
         area_diff = self.area() - other.area()
