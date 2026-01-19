@@ -59,6 +59,8 @@ class Triangle(ABC):
 
     def __eq__(self, other) -> bool:
         """Equality comparison for Triangle"""
+        if not isinstance(other, Triangle):
+            raise TypeError("Can only compare Triangle with another Triangle")
         return (
             math.isclose(self.a, other.a)
             and math.isclose(self.b, other.b)
@@ -67,7 +69,17 @@ class Triangle(ABC):
 
     def __lt__(self, other) -> bool:
         """Less-than comparison for Triangle based on area"""
+        if not isinstance(other, Triangle):
+            raise TypeError("Can only compare Triangle with another Triangle")
         return self.area() < other.area()
+
+    def __str__(self) -> str:
+        """String representation of the Triangle"""
+        return f"Triangle(a={self.a}, b={self.b}, c={self.c})"
+
+    def __repr__(self) -> str:
+        """String representation of the Triangle"""
+        return f"a={self.a}, b={self.b}, c={self.c}"
 
 
 @total_ordering
@@ -170,6 +182,20 @@ class RightTriangle(Triangle):
         new /= scale
         return new
 
+    def __eq__(self, other) -> bool:
+        """Equality comparison for RightTriangle"""
+        if not isinstance(other, RightTriangle):
+            raise TypeError(
+                "Can only compare RightTriangle with another RightTriangle")
+        return super().__eq__(other)
+
+    def __lt__(self, other) -> bool:
+        """Less-than comparison for RightTriangle based on area"""
+        if not isinstance(other, RightTriangle):
+            raise TypeError(
+                "Can only compare RightTriangle with another RightTriangle")
+        return super().__lt__(other)
+
     def __str__(self) -> str:
         """String representation of the RightTriangle"""
         return f"RightTriangle(a={self.a}, b={self.b}, c={self.c})"
@@ -244,6 +270,20 @@ class AcuteTriangle(Triangle):
         new /= scale
         return new
 
+    def __eq__(self, other) -> bool:
+        """Equality comparison for AcuteTriangle"""
+        if not isinstance(other, AcuteTriangle):
+            raise TypeError(
+                "Can only compare AcuteTriangle with another AcuteTriangle")
+        return super().__eq__(other)
+
+    def __lt__(self, other) -> bool:
+        """Less-than comparison for AcuteTriangle based on area"""
+        if not isinstance(other, AcuteTriangle):
+            raise TypeError(
+                "Can only compare AcuteTriangle with another AcuteTriangle")
+        return super().__lt__(other)
+
     def __str__(self) -> str:
         """String representation of the AcuteTriangle"""
         return f"AcuteTriangle(a={self.a}, b={self.b}, c={self.c})"
@@ -272,9 +312,11 @@ class ObtuseTriangle(Triangle):
 
         # Check that exactly one angle is obtuse (using law of cosines)
         # For an obtuse triangle: one of a² + b² < c², a² + c² < b², or b² + c² < a² must be true
-        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c**2 < b**2, b**2 + c**2 < a**2])
+        obtuse_count = sum([a**2 + b**2 < c**2, a**2 + c **
+                           2 < b**2, b**2 + c**2 < a**2])
         if obtuse_count != 1:
-            raise ValueError("Exactly one angle must be obtuse (greater than 90 degrees)")
+            raise ValueError(
+                "Exactly one angle must be obtuse (greater than 90 degrees)")
 
         super().__init__(a, b, c)
 
@@ -318,6 +360,20 @@ class ObtuseTriangle(Triangle):
         new = ObtuseTriangle(self.a, self.b, self.c)
         new /= scale
         return new
+
+    def __eq__(self, other) -> bool:
+        """Equality comparison for ObtuseTriangle"""
+        if not isinstance(other, ObtuseTriangle):
+            raise TypeError(
+                "Can only compare ObtuseTriangle with another ObtuseTriangle")
+        return super().__eq__(other)
+
+    def __lt__(self, other) -> bool:
+        """Less-than comparison for ObtuseTriangle based on area"""
+        if not isinstance(other, ObtuseTriangle):
+            raise TypeError(
+                "Can only compare ObtuseTriangle with another ObtuseTriangle")
+        return super().__lt__(other)
 
     def __str__(self) -> str:
         """String representation of the ObtuseTriangle"""

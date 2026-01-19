@@ -89,13 +89,13 @@ class Circle:
     def __eq__(self, other) -> bool:
         """Equality comparison for Circle"""
         if not isinstance(other, Circle):
-            return NotImplemented
+            raise TypeError("Can only compare Circle with another Circle")
         return math.isclose(self._radius, other.radius())
 
     def __lt__(self, other) -> bool:
         """Less-than comparison for Circle based on area"""
         if not isinstance(other, Circle):
-            return NotImplemented
+            raise TypeError("Can only compare Circle with another Circle")
         return self.area() < other.area()
 
     def __str__(self) -> str:
