@@ -9,7 +9,7 @@ description = "A Python package for working with geometric shapes, providing com
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Roy Brabson", email = "rbrabson@example.com" }]
+authors = [{ name = "Roy Brabson", email = "brabson@alumni.duke.edu" }]
 keywords = ["geometry", "shapes", "triangles", "circles", "mathematics"]
 classifiers = [
     "Development Status :: 3 - Alpha",
