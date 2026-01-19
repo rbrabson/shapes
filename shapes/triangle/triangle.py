@@ -1,8 +1,8 @@
 """ Module to represent and calculate properties of triangles """
+import math
 from abc import ABC, abstractmethod
 from functools import total_ordering
 from typing import Self
-import math
 
 
 @total_ordering
