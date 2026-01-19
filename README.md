@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Triangles
+### Triangle Usage
 
 #### Basic Usage - Right Triangle
 
@@ -99,7 +99,7 @@ obtuse_angles = [a for a in angles if a > 1.5708]  # > π/2
 print(f"Obtuse angles: {len(obtuse_angles)}")        # 1
 ```
 
-#### Input Validation
+#### Input Validation for Triangles
 
 ```python
 from triangle import AcuteTriangle, ObtuseTriangle
@@ -269,7 +269,7 @@ circles.sort()
 print([c.radius for c in circles])  # [3.0, 3.0, 5.0]
 ```
 
-#### Input Validation
+#### Input Validation for Circles
 
 ```python
 from circle import Circle
