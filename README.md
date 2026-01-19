@@ -1,18 +1,29 @@
-# Triangles Package
+# Shapes Package
 
-A Python package for working with triangles, providing comprehensive geometric calculations for right-angled, acute, and obtuse triangles.
+A Python package for working with geometric shapes, providing comprehensive calculations for triangles and circles.
 
 ## Features
+
+### Triangles
 
 - **Multiple Triangle Types**: Support for `RightTriangle`, `AcuteTriangle`, and `ObtuseTriangle`
 - **Object-Oriented Design**: Base `Triangle` class with inheritance hierarchy
 - **Geometric Properties**: Calculate area, perimeter, inradius, circumradius, and altitudes
 - **Angle Calculations**: Compute all angles using law of cosines
 - **Trigonometric Functions**: Full set of trig functions for right triangles
-- **Scaling Operations**: Scale triangles by area with intuitive operators (`*`, `/`, `*=`, `/=`)
-- **Comparisons**: Compare triangles by area with full ordering support
-- **Type Safety**: Full type hints using Python's typing module with `Self` support
 - **Input Validation**: Automatic validation of triangle inequality and angle constraints
+
+### Circles
+
+- **Comprehensive Circle Calculations**: Diameter, circumference, area
+- **Advanced Properties**: Arc length, sector area, chord length, segment area
+- **Angle-Based Calculations**: Support for calculations with central angles in radians
+
+### Common Features
+
+- **Scaling Operations**: Scale shapes by area with intuitive operators (`*`, `/`, `*=`, `/=`)
+- **Comparisons**: Compare shapes by area with full ordering support
+- **Type Safety**: Full type hints using Python's typing module with `Self` support
 
 ## Installation
 
@@ -33,7 +44,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Usage - Right Triangle
+### Triangles
+
+#### Basic Usage - Right Triangle
 
 ```python
 from triangles import RightTriangle
@@ -46,10 +59,10 @@ print(f"Opposite: {triangle.opposite()}")      # 3
 print(f"Adjacent: {triangle.adjacent()}")      # 4
 print(f"Hypotenuse: {triangle.hypotenuse()}")  # 5.0
 print(f"Area: {triangle.area()}")              # 6.0
-```
+```# Acute Triangle
 
-### Acute Triangle
-
+```python
+from triangle
 ```python
 from triangles import AcuteTriangle
 
@@ -68,10 +81,10 @@ print(f"Altitude to side b: {triangle.altitude_b()}")
 print(f"Altitude to side c: {triangle.altitude_c()}")
 ```
 
-### Obtuse Triangle
+#### Obtuse Triangle
 
 ```python
-from triangles import ObtuseTriangle
+from triangle import ObtuseTriangle
 
 # Create an obtuse triangle (one angle > 90°)
 triangle = ObtuseTriangle(3, 4, 6)
@@ -86,10 +99,10 @@ obtuse_angles = [a for a in angles if a > 1.5708]  # > π/2
 print(f"Obtuse angles: {len(obtuse_angles)}")        # 1
 ```
 
-### Input Validation
+#### Input Validation
 
 ```python
-from triangles import AcuteTriangle, ObtuseTriangle
+from triangle import AcuteTriangle, ObtuseTriangle
 
 # Triangle inequality violation
 try:
@@ -109,9 +122,11 @@ except ValueError as e:
     print(e)  # "Exactly one angle must be obtuse (greater than 90 degrees)"
 ```
 
-### Geometric Calculations
+#### Geometric Calculations
 
 ```python
+from triangle import RightTriangle
+
 triangle = RightTriangle(3, 4)
 
 print(f"Area: {triangle.area()}")                    # 6.0
@@ -119,9 +134,11 @@ print(f"Perimeter: {triangle.perimeter()}")          # 12.0
 print(f"Inradius: {triangle.inradius()}")            # 1.0
 print(f"Circumradius: {triangle.circumradius()}")    # 2.5
 print(f"Altitude: {triangle.altitude()}")            # 2.4
-```
+```# Trigonometric Functions
 
-### Trigonometric Functions
+```python
+from triangle import RightTriangle
+nometric Functions
 
 ```python
 triangle = RightTriangle(3, 4)
@@ -129,9 +146,11 @@ triangle = RightTriangle(3, 4)
 print(f"sin: {triangle.sin()}")      # 0.6
 print(f"cos: {triangle.cos()}")      # 0.8
 print(f"tan: {triangle.tan()}")      # 0.75
-print(f"alpha: {triangle.alpha()}")  # ~0.6435 radians
-print(f"beta: {triangle.beta()}")    # ~0.9273 radians
-```
+pri# Scaling Operations
+
+```python
+from triangle import RightTriangle
+
 
 ### Scaling Operations
 
@@ -146,10 +165,10 @@ print(scaled.area())  # 24.0 (4x the original area)
 # Scale down by area (divide)
 smaller = triangle / 2
 print(smaller.area())  # 3.0 (half the original area)
+# Comparisons
 
-# In-place scaling
-triangle *= 2
-print(triangle.area())  # 12.0
+```python
+from triangle.area())  # 12.0
 ```
 
 ### Comparisons
@@ -166,11 +185,154 @@ print(t1 > t3)   # True (6 > 5.33)
 print(t2 > t1)   # True (14.7 > 6)
 print(t1 == RightTriangle(3, 4))  # True
 
-# Works across triangle types
+# # Circles
+
+#### Basic Usage
+
+```python
+from circle import Circle
+
+# Create a circle with radius 5
+circle = Circle(5)
+
+# Basic properties
+print(f"Radius: {circle.radius}")              # 5.0
+print(f"Diameter: {circle.diameter()}")        # 10.0
+print(f"Circumference: {circle.circumference()}")  # 31.42...
+print(f"Area: {circle.area()}")                # 78.54...
+```
+
+#### Advanced Circle Calculations
+
+```python
+from circle import Circle
+import math
+
+circle = Circle(10)
+
+# Arc length for a given angle (in radians)
+arc = circle.arc_length(math.pi / 2)  # Quarter circle arc
+print(f"Arc length (90°): {arc}")      # 15.71...
+
+# Sector area (pizza slice)
+sector = circle.sector_area(math.pi / 2)
+print(f"Sector area (90°): {sector}")  # 78.54...
+
+# Chord length for a central angle
+chord = circle.chord_length(math.pi / 3)  # 60° central angle
+print(f"Chord length (60°): {chord}")     # 10.0
+
+# Segment area (between chord and arc)
+segment = circle.segment_area(math.pi / 3)
+print(f"Segment area (60°): {segment}")   # 13.09...
+```
+
+#### Scaling Circles
+
+```python
+from circle import Circle
+
+circle = Circle(5)
+original_area = circle.area()  # ~78.54
+
+# Scale by area (multiply)
+scaled = circle * 4
+print(f"Scaled radius: {scaled.radius}")  # 10.0 (radius doubles when area quadruples)
+print(f"Scaled area: {scaled.area()}")    # ~314.16 (4x original)
+
+# Scale down by area (divide)
+smaller = circle / 2
+print(f"Smaller area: {smaller.area()}")  # ~39.27 (half original)
+
+# In-place scaling
+circle *= 2
+print(f"New area: {circle.area()}")       # ~157.08
+```
+
+#### Comparing Circles
+
+```python
+from circle import Circle
+
+c1 = Circle(3)   # area ≈ 28.27
+c2 = Circle(5)   # area ≈ 78.54
+c3 = Circle(3)   # area ≈ 28.27
+
+# Compare by area
+print(c1 < c2)   # True
+print(c1 == c3)  # True
+print(c2 > c1)   # True
+
+# Sort circles by area
+circles = [c2, c1, c3]
+circles.sort()
+print([c.radius for c in circles])  # [3.0, 3.0, 5.0]
+```
+
+#### Input Validation
+
+```python
+from circle import Circle
+
+# Negative radius
+try:
+    circle = Circle(-5)
+except ValueError as e:
+    print(e)  # "Radius must be positive"
+
+# Zero radius
+try:
+    circle = Circle(0)
+except ValueError as e:
+    print(e)  # "Radius must be positive"
+```
+
+## API Reference
+
+### Circle
+
+```python
+Circle(radius: int | float)
+```
+
+Creates a circle with the specified radius.
+
+**Parameters:**
+
+- `radius`: Radius of the circle (must be positive)
+
+**Raises:**
+
+- `ValueError`: If radius is not positive
+
+**Properties:**
+
+- `radius: float`: The circle's radius
+
+**Methods:**
+
+- `diameter() -> float`: Returns the diameter (2r)
+- `circumference() -> float`: Returns the circumference (2πr)
+- `area() -> float`: Returns the area (πr²)
+- `arc_length(angle: float) -> float`: Arc length for given angle in radians
+- `sector_area(angle: float) -> float`: Sector area for given angle in radians
+- `chord_length(angle: float) -> float`: Chord length for given central angle in radians
+- `segment_area(angle: float) -> float`: Circular segment area for given angle in radians
+
+**Operators:**
+
+- `*`, `/`, `*=`, `/=`: Scaling operations (scale by area)
+- `==`, `!=`, `<`, `>`, `<=`, `>=`: Comparison operators (compare by area)
+
+**String Representations:**
+
+- `str(circle)`: Returns "Circle(radius=r)"
+- `repr(circle)`: Returns "radius=r"riangle types
 triangles = [t1, t2, t3]
 triangles.sort()  # Sorts by area
 print([t.area() for t in triangles])  # [~5.33, 6.0, ~14.7]
-```
+
+``` code
 
 ## API Reference
 
@@ -263,70 +425,120 @@ Run the comprehensive test suite:
 
 ```bash
 # Run all tests
-pytest triangles/tests/test_triangle.py -v
+pytest
+
+# Run triangle tests only
+pytest triangle/tests/test_triangle.py -v
+
+# Run circle tests only
+pytest circle/tests/test_circle.py -v
 
 # Run tests for specific triangle type
-pytest triangles/tests/test_triangle.py::TestRightTriangle -v
-pytest triangles/tests/test_triangle.py::TestAcuteTriangle -v
-pytest triangles/tests/test_triangle.py::TestObtuseTriangle -v
+pytest triangle/tests/test_triangle.py::TestRightTriangle -v
+pytest triangle/tests/test_triangle.py::TestAcuteTriangle -v
+pytest triangle/tests/test_triangle.py::TestObtuseTriangle -v
 
 # Run with coverage
-pytest triangles/tests/test_triangle.py --cov=triangles.triangle
+pytest --cov=triangle --cov=circle
 ```
 
-The test suite includes 83 tests covering:
+The test suite includes 139 tests covering:
 
-**RightTriangle (40 tests):**
+**Triangle Tests (83 tests):**
 
-- Basic initialization and properties
-- Geometric calculations
-- Trigonometric functions
-- Scaling operations
-- Comparison operators
-- String representations
-- Edge cases (special triangles, extreme values)
+- **RightTriangle (40 tests):**
+  - Basic initialization and properties
+  - Geometric calculations
+  - Trigonometric functions
+  - Scaling operations
+  - Comparison operators
+  - String representations
+  - Edge cases (special triangles, extreme values)
 
-**AcuteTriangle (20 tests):**
+- **AcuteTriangle (20 tests):**
+  - Initialization and validation
+  - Geometric calculations (area, perimeter, radii, altitudes)
+  - Angle calculations and validation
+  - Scaling operations
+  - Comparison operators
 
-- Initialization and validation
-- Geometric calculations (area, perimeter, radii, altitudes)
-- Angle calculations and validation
-- Scaling operations
-- Comparison operators
+- **ObtuseTriangle (20 tests):**
+  - Initialization and validation
+  - Geometric calculations
+  - Angle calculations (ensuring one obtuse angle)
+  - Scaling operations
+  - Comparison operators
 
-**ObtuseTriangle (20 tests):**
+- **Cross-type comparisons (3 tests):**
+  - Comparing different triangle types by area
 
-- Initialization and validation
-- Geometric calculations
-- Angle calculations (ensuring one obtuse angle)
-- Scaling operations
-- Comparison operators
+**Circle Tests (56 tests):**
 
-**Cross-type comparisons (3 tests):**
-
-- Comparing different triangle types by area
+- **TestCircleBasics (7 tests):**
+  - Initialization with positive, negative, and zero radius
+  - Diameter calculations
+  
+- **TestCircleGeometry (11 tests):**
+  - Circumference and area calculations
+  - Arc length for various angles
+  - Sector area calculations
+  - Chord length calculations
+  - Segment area calculations
+  
+- **TestCircleScaling (7 tests):**
+  - Multiplication and division operators
+  - In-place scaling operations
+  - Type preservation after scaling
+  
+- **TestCircleComparison (8 tests):**
+  - Equality and inequality
+  - Less than, greater than comparisons
+  - Area-based comparison validation
+  
+- **TestCircleStringRepresentation (3 tests):**
+  - **str** and **repr** methods
+  
+- **TestCircleEdgeCases (20 tests):**
+  - Very small and large radii
+  - Chained scaling operations
+  - Zero angle calculations
+  - Comparison with scaled circles
 
 ## Project Structure
 
-``` bash
+``` fixed
 .
-├── triangles/
+├── triangle/
 │   ├── __init__.py          # Exports Triangle, RightTriangle, AcuteTriangle, ObtuseTriangle
 │   ├── triangle.py          # Triangle base class and implementations
 │   └── tests/
 │       ├── __init__.py
 │       └── test_triangle.py # Comprehensive test suite (83 tests)
+├── circle/
+│   ├── __init__.py          # Exports Circle
+│   ├── circle.py            # Circle class implementation
+│   └── tests/
+│       ├── __init__.py
+│       └── test_circle.py   # Comprehensive test suite (56 tests)
 ├── README.md
 └── requirements.txt
 ```
 
 ## Class Hierarchy
 
-``` bash
+**Triangles:**
+
+``` fixed
 Triangle (ABC)
 ├── RightTriangle
 ├── AcuteTriangle
 └── ObtuseTriangle
+```
+
+**Circles:**
+
+``` fixed
+Circle (standalone class)
 ```
 
 The `Triangle` base class provides common functionality:
@@ -346,34 +558,83 @@ Each subclass implements:
 
 - Python 3.10+
 - No external dependencies for core functionality
-- pytest for running tests
+- pyte
 
-## License
+## Check for type errors  
 
-MIT License
-
-## Contributing
-
-Contributions are welcome! Please ensure all tests pass before submitting a pull request.
-
-```bash
-# Run all tests
-pytest triangles/tests/test_triangle.py -v
-
-# Check for type errors
-python -m mypy triangles/triangle.py
-
-# Format code (if using black)
-black triangles/
-```
+python -m mypy triangle/triangle.py circle/circle.py
 
 ## Design Notes
 
-### Inheritance Hierarchy
+## Circle Design
 
-The package uses an abstract base class `Triangle` to share common functionality across all triangle types, reducing code duplication and ensuring consistent behavior.
+The `Circle` class provides:
 
-### Type Safety
+- **Radius-based initialization**: All calculations derive from the radius
+- **Comprehensive geometric methods**: Beyond basic properties, includes sector, segment, arc, and chord calculations
+- **Angle flexibility**: All angle-based methods accept radians for precision
+- **Area-based scaling**: Like triangles, circles scale by area (radius changes by √scale)
+
+## Examples
+
+### Working with Circles and Triangles Together
+
+```python
+from circle import Circle
+from triangle import RightTriangle
+import math
+
+# Create shapes
+circle = Circle(5)
+triangle = RightTriangle(3, 4)
+
+# Compare areas
+print(f"Circle area: {circle.area():.2f}")      # 78.54
+print(f"Triangle area: {triangle.area():.2f}")  # 6.00
+print(f"Circle is larger: {circle.area() > triangle.area()}")  # True
+
+# Inscribed circle in triangle (approximation)
+inradius = triangle.inradius()
+inscribed = Circle(inradius)
+print(f"Inscribed circle area: {inscribed.area():.2f}")  # 3.14
+
+from triangle import RightTriangle
+import math
+
+# Circumscribed circle around right triangle
+circumradius = triangle.circumradius()
+circumscribed = Circle(circumradius)
+print(f"Circumscribed circle area: {circumscribed.area():.2f}")  # 19.63
+```
+
+### Circle Sectors and Segments
+
+```python
+from circle import Circle
+import math
+
+from triangle import RightTriangle
+
+# Pizza with 8 slices
+pizza = Circle(12)  # 12 inch radius
+slice_angle = 2 * math.pi / 8  # 45 degrees
+
+slice_area = pizza.sector_area(slice_angle)
+print(f"Each slice area: {slice_area:.2f} sq in")
+
+# Arc length of crust per slice
+crust_length = pizza.arc_length(slice_angle)
+print(f"Crustper slice: {crust_length:.2f} inches")
+
+# Calculate segment (bow-tie shape between chord and arc)
+segment = pizza.segment_area(slice_angle)
+print(f"Segment area: {segment:.2f} sq in")
+```
+
+### Working with Different Triangle Types
+
+```python
+from triangley
 
 The package uses Python 3.10+ type hints, including:
 
@@ -395,7 +656,7 @@ All types check the triangle inequality: `a + b > c`, `a + c > b`, `b + c > a`
 
 ### Working with Different Triangle Types
 
-```python
+``` python
 from triangles import RightTriangle, AcuteTriangle, ObtuseTriangle
 import math
 

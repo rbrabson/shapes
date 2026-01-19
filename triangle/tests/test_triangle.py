@@ -1,7 +1,7 @@
 """Test cases for Triangle classes"""
 import math
 import pytest
-from triangles import RightTriangle, AcuteTriangle, ObtuseTriangle
+from triangle import RightTriangle, AcuteTriangle, ObtuseTriangle
 
 
 class TestRightTriangleBasics:
