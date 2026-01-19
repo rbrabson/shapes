@@ -142,5 +142,8 @@ cython_debug/
 *.swo
 *~
 
+# ruff
+.ruff_cache/
+
 # macOS
 .DS_Store
