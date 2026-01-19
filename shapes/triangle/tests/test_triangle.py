@@ -1,4 +1,5 @@
 """Test cases for Triangle classes"""
+
 import math
 
 import pytest
@@ -92,23 +93,23 @@ class TestRightTriangleTrigonometry:
     def test_csc(self):
         """Test cosecant calculation"""
         triangle = RightTriangle(3, 4)
-        assert math.isclose(triangle.csc(), 5/3)
+        assert math.isclose(triangle.csc(), 5 / 3)
 
     def test_cot(self):
         """Test cotangent calculation"""
         triangle = RightTriangle(3, 4)
-        assert math.isclose(triangle.cot(), 4/3)
+        assert math.isclose(triangle.cot(), 4 / 3)
 
     def test_alpha(self):
         """Test alpha angle calculation"""
         triangle = RightTriangle(3, 4)
-        expected = math.atan(3/4)
+        expected = math.atan(3 / 4)
         assert math.isclose(triangle.alpha(), expected)
 
     def test_beta(self):
         """Test beta angle calculation"""
         triangle = RightTriangle(3, 4)
-        expected = math.atan(4/3)
+        expected = math.atan(4 / 3)
         assert math.isclose(triangle.beta(), expected)
 
     def test_angles_sum_to_90_degrees(self):

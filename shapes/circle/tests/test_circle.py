@@ -1,4 +1,5 @@
 """Test cases for Circle class"""
+
 import math
 
 import pytest
@@ -72,15 +73,13 @@ class TestCircleGeometry:
     def test_arc_length_full_circle(self):
         """Test arc length for full circle"""
         circle = Circle(3)
-        assert math.isclose(circle.arc_length(
-            2 * math.pi), circle.circumference())
+        assert math.isclose(circle.arc_length(2 * math.pi), circle.circumference())
 
     def test_sector_area(self):
         """Test sector area calculation"""
         circle = Circle(4)
         # Sector area for pi/2 radians (quarter circle)
-        assert math.isclose(circle.sector_area(
-            math.pi / 2), 0.5 * 16 * math.pi / 2)
+        assert math.isclose(circle.sector_area(math.pi / 2), 0.5 * 16 * math.pi / 2)
 
     def test_sector_area_full_circle(self):
         """Test sector area for full circle"""
