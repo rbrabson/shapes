@@ -32,6 +32,21 @@ class Triangle(ABC):
         """ Calculate the inradius of the triangle """
         return self.area() / (0.5 * self.perimeter())
 
+    def angle_a(self) -> float:
+        """ Calculate angle A (opposite to side a) in radians using law of cosines """
+        cos_a = (self.b**2 + self.c**2 - self.a**2) / (2 * self.b * self.c)
+        return math.acos(cos_a)
+
+    def angle_b(self) -> float:
+        """ Calculate angle B (opposite to side b) in radians using law of cosines """
+        cos_b = (self.a**2 + self.c**2 - self.b**2) / (2 * self.a * self.c)
+        return math.acos(cos_b)
+
+    def angle_c(self) -> float:
+        """ Calculate angle C (opposite to side c) in radians using law of cosines """
+        cos_c = (self.a**2 + self.b**2 - self.c**2) / (2 * self.a * self.b)
+        return math.acos(cos_c)
+
     @abstractmethod
     def __imul__(self, scale: float) -> Self:
         """ In-place scale the area of the triangle by a factor """
@@ -96,6 +111,18 @@ class RightTriangle(Triangle):
     def beta(self) -> float:
         """ Calculate angle beta in radians """
         return math.atan(self.adjacent() / self.opposite())
+
+    def angle_a(self) -> float:
+        """ Calculate angle A (opposite to side a) in radians """
+        return math.atan(self.a / self.b)
+
+    def angle_b(self) -> float:
+        """ Calculate angle B (opposite to side b) in radians """
+        return math.atan(self.b / self.a)
+
+    def angle_c(self) -> float:
+        """ Calculate angle C (the right angle) in radians """
+        return math.pi / 2
 
     def sin(self) -> float:
         """ Calculate sine of the angle """
@@ -194,21 +221,6 @@ class AcuteTriangle(Triangle):
         """ Calculate the altitude from vertex C to side c """
         return 2 * self.area() / self.c
 
-    def angle_a(self) -> float:
-        """ Calculate angle A (opposite to side a) in radians using law of cosines """
-        cos_a = (self.b**2 + self.c**2 - self.a**2) / (2 * self.b * self.c)
-        return math.acos(cos_a)
-
-    def angle_b(self) -> float:
-        """ Calculate angle B (opposite to side b) in radians using law of cosines """
-        cos_b = (self.a**2 + self.c**2 - self.b**2) / (2 * self.a * self.c)
-        return math.acos(cos_b)
-
-    def angle_c(self) -> float:
-        """ Calculate angle C (opposite to side c) in radians using law of cosines """
-        cos_c = (self.a**2 + self.b**2 - self.c**2) / (2 * self.a * self.b)
-        return math.acos(cos_c)
-
     def __imul__(self, scale: float) -> Self:
         """ In-place scale the area of the triangle by a factor """
         factor = math.sqrt(scale)
@@ -288,21 +300,6 @@ class ObtuseTriangle(Triangle):
     def altitude_c(self) -> float:
         """ Calculate the altitude from vertex C to side c """
         return 2 * self.area() / self.c
-
-    def angle_a(self) -> float:
-        """ Calculate angle A (opposite to side a) in radians using law of cosines """
-        cos_a = (self.b**2 + self.c**2 - self.a**2) / (2 * self.b * self.c)
-        return math.acos(cos_a)
-
-    def angle_b(self) -> float:
-        """ Calculate angle B (opposite to side b) in radians using law of cosines """
-        cos_b = (self.a**2 + self.c**2 - self.b**2) / (2 * self.a * self.c)
-        return math.acos(cos_b)
-
-    def angle_c(self) -> float:
-        """ Calculate angle C (opposite to side c) in radians using law of cosines """
-        cos_c = (self.a**2 + self.b**2 - self.c**2) / (2 * self.a * self.b)
-        return math.acos(cos_c)
 
     def __imul__(self, scale: float) -> Self:
         """ In-place scale the area of the triangle by a factor """
