@@ -41,7 +41,11 @@ include = ["shapes*"]
 exclude = ["tests*", "*.tests*", "*.tests"]
 
 [tool.pytest.ini_options]
-testpaths = ["shapes/triangle/tests", "shapes/circle/tests"]
+testpaths = [
+    "shapes/triangle/tests",
+    "shapes/circle/tests",
+    "shapes/rectangles/tests",
+]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]

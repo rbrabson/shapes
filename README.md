@@ -1,6 +1,6 @@
 # Shapes Package
 
-A Python package for working with geometric shapes, providing comprehensive calculations for triangles and circles.
+A Python package for working with geometric shapes, providing comprehensive calculations for triangles, circles, and rectangles.
 
 ## Features
 
@@ -18,6 +18,14 @@ A Python package for working with geometric shapes, providing comprehensive calc
 - **Comprehensive Circle Calculations**: Diameter, circumference, area
 - **Advanced Properties**: Arc length, sector area, chord length, segment area
 - **Angle-Based Calculations**: Support for calculations with central angles in radians
+
+### Rectangles
+
+- **Multiple Rectangle Types**: Support for `Rectangle` and `Square` (special case)
+- **Geometric Properties**: Calculate area, perimeter, diagonal, aspect ratio
+- **Advanced Calculations**: Circumradius, inradius, diagonal angle
+- **Transformation Methods**: Scale to area, scale to fit, rotate 90°
+- **Type Detection**: Check if a rectangle is a square
 
 ### Common Features
 
@@ -285,6 +293,148 @@ except ValueError as e:
     print(e)  # "Radius must be positive"
 ```
 
+### Rectangle Usage
+
+#### Basic Usage - Rectangle
+
+```python
+from shapes.rectangles.rectangle import Rectangle
+
+# Create a rectangle
+rect = Rectangle(4, 6)
+
+# Basic properties
+print(f"Width: {rect.width()}")              # 4.0
+print(f"Height: {rect.height()}")            # 6.0
+print(f"Area: {rect.area()}")                # 24.0
+print(f"Perimeter: {rect.perimeter()}")      # 20.0
+print(f"Diagonal: {rect.diagonal()}")        # 7.21...
+```
+
+#### Advanced Rectangle Calculations
+
+```python
+from shapes.rectangles.rectangle import Rectangle
+import math
+
+rect = Rectangle(16, 9)
+
+# Geometric properties
+print(f"Aspect ratio: {rect.aspect_ratio()}")    # 1.778 (16:9)
+print(f"Is square: {rect.is_square()}")          # False
+print(f"Circumradius: {rect.circumradius()}")    # 9.22... (radius of circumscribed circle)
+print(f"Inradius: {rect.inradius()}")            # 4.5 (radius of largest inscribed circle)
+print(f"Diagonal angle: {math.degrees(rect.angle_diagonal())}°")  # 29.36°
+```
+
+#### Rectangle Transformations
+
+```python
+from shapes.rectangles.rectangle import Rectangle
+
+rect = Rectangle(4, 6)
+
+# Scale to specific area maintaining aspect ratio
+scaled = rect.scale_to_area(48)
+print(f"New dimensions: {scaled.width()} x {scaled.height()}")  # 5.66 x 8.49
+print(f"Area: {scaled.area()}")                                  # 48.0
+
+# Scale to fit within constraints
+fitted = rect.scale_to_fit(50, 100)
+print(f"Fitted: {fitted.width()} x {fitted.height()}")  # Scaled to fit
+
+# Rotate 90 degrees
+rotated = rect.rotate_90()
+print(f"Rotated: {rotated.width()} x {rotated.height()}")  # 6 x 4
+```
+
+#### Square Usage
+
+```python
+from shapes.rectangles.rectangle import Square
+
+# Create a square
+square = Square(5)
+
+print(f"Side: {square.side()}")                  # 5.0
+print(f"Area: {square.area()}")                  # 25.0
+print(f"Diagonal: {square.diagonal()}")          # 7.07... (5√2)
+print(f"Circumradius: {square.circumradius()}")  # 3.54...
+print(f"Inradius: {square.inradius()}")          # 2.5
+print(f"Apothem: {square.apothem()}")            # 2.5
+print(f"Is square: {square.is_square()}")        # True
+```
+
+#### Scaling Rectangles
+
+```python
+from shapes.rectangles.rectangle import Rectangle, Square
+
+rect = Rectangle(4, 6)
+original_area = rect.area()  # 24.0
+
+# Scale by area (multiply)
+scaled = rect * 2
+print(f"Scaled area: {scaled.area()}")  # 48.0 (2x original)
+print(f"Aspect ratio preserved: {scaled.aspect_ratio() == rect.aspect_ratio()}")  # True
+
+# Scale down by area (divide)
+smaller = rect / 2
+print(f"Smaller area: {smaller.area()}")  # 12.0 (half original)
+
+# In-place scaling
+rect *= 2
+print(f"New area: {rect.area()}")  # 48.0
+
+# Square scaling preserves type
+square = Square(4)
+scaled_square = square * 4
+print(f"Type preserved: {isinstance(scaled_square, Square)}")  # True
+```
+
+#### Comparing Rectangles
+
+```python
+from shapes.rectangles.rectangle import Rectangle, Square
+
+r1 = Rectangle(4, 6)   # area = 24
+r2 = Rectangle(3, 8)   # area = 24
+r3 = Rectangle(5, 10)  # area = 50
+
+# Compare by area
+print(r3 > r1)   # True
+print(r1 == Rectangle(4, 6))  # True (same dimensions)
+
+# Square vs Rectangle
+square = Square(4)     # area = 16
+rect = Rectangle(2, 8) # area = 16
+print(square.area() == rect.area())  # True (same area, different shapes)
+```
+
+#### Input Validation for Rectangles
+
+```python
+from shapes.rectangles.rectangle import Rectangle, Square
+
+# Negative width
+try:
+    rect = Rectangle(-5, 10)
+except ValueError as e:
+    print(e)  # "Width must be positive"
+
+# Zero height
+try:
+    rect = Rectangle(5, 0)
+except ValueError as e:
+    print(e)  # "Height must be positive"
+
+# Negative side for square
+try:
+    square = Square(-5)
+except ValueError as e:
+    print(e)  # "Width must be positive"
+```
+
 ## API Reference for Circles
 
 ### Circle
@@ -412,6 +562,87 @@ Same as `AcuteTriangle`:
 - `altitude_a()`, `altitude_b()`, `altitude_c() -> float`: Altitudes
 - `angle_a()`, `angle_b()`, `angle_c() -> float`: Angles in radians
 
+## API Reference for Rectangles
+
+### Rectangle
+
+```python
+Rectangle(width: int | float, height: int | float)
+```
+
+Creates a rectangle with the specified width and height.
+
+**Parameters:**
+
+- `width`: Width of the rectangle (must be positive)
+- `height`: Height of the rectangle (must be positive)
+
+**Raises:**
+
+- `ValueError`: If width or height is not positive
+
+**Methods:**
+
+- `width() -> float`: Returns the width
+- `height() -> float`: Returns the height
+- `area() -> float`: Returns the area (width × height)
+- `perimeter() -> float`: Returns the perimeter (2(width + height))
+- `diagonal() -> float`: Returns the diagonal length (√(width² + height²))
+- `aspect_ratio() -> float`: Returns the aspect ratio (width / height)
+- `is_square() -> bool`: Returns True if width equals height (within floating-point tolerance)
+- `circumradius() -> float`: Returns radius of circumscribed circle (diagonal / 2)
+- `inradius() -> float`: Returns radius of largest inscribed circle (min(width, height) / 2)
+- `angle_diagonal() -> float`: Returns angle between diagonal and width in radians
+- `scale_to_area(target_area: float) -> Rectangle`: Returns new rectangle with same aspect ratio scaled to target area
+- `scale_to_fit(max_width: float, max_height: float) -> Rectangle`: Returns new rectangle scaled to fit within constraints
+- `rotate_90() -> Rectangle`: Returns new rectangle rotated 90° (swaps width and height)
+
+**Operators:**
+
+- `*`, `/`, `*=`, `/=`: Scaling operations (scale by area)
+- `==`, `!=`, `<`, `>`, `<=`, `>=`: Comparison operators (compare by area)
+
+**String Representations:**
+
+- `str(rectangle)`: Returns "Rectangle(width=w, height=h)"
+- `repr(rectangle)`: Returns "width=w, height=h"
+
+### Square
+
+```python
+Square(side: int | float)
+```
+
+Creates a square with the specified side length. Inherits from Rectangle.
+
+**Parameters:**
+
+- `side`: Side length of the square (must be positive)
+
+**Raises:**
+
+- `ValueError`: If side is not positive
+
+**Methods:**
+
+Inherits all Rectangle methods, plus:
+
+- `side() -> float`: Returns the side length
+- `diagonal() -> float`: Returns the diagonal length (side × √2)
+- `circumradius() -> float`: Returns radius of circumscribed circle (side × √2 / 2)
+- `inradius() -> float`: Returns radius of inscribed circle (side / 2)
+- `apothem() -> float`: Returns the apothem (side / 2)
+
+**Operators:**
+
+- `*`, `/`, `*=`, `/=`: Scaling operations (returns Square, preserves type)
+- All comparison operators inherited from Rectangle
+
+**String Representations:**
+
+- `str(square)`: Returns "Square(side=s)"
+- `repr(square)`: Returns "side=s"
+
 ## Testing
 
 Run the comprehensive test suite:
@@ -426,6 +657,9 @@ pytest shapes/triangle/tests/test_triangle.py -v
 # Run circle tests only
 pytest shapes/circle/tests/test_circle.py -v
 
+# Run rectangle tests only
+pytest shapes/rectangles/tests/test_rectangle.py -v
+
 # Run tests for specific triangle type
 pytest shapes/triangle/tests/test_triangle.py::TestRightTriangle -v
 pytest shapes/triangle/tests/test_triangle.py::TestAcuteTriangle -v
@@ -435,7 +669,7 @@ pytest shapes/triangle/tests/test_triangle.py::TestObtuseTriangle -v
 pytest --cov=shapes
 ```
 
-The test suite includes 139 tests covering:
+The test suite includes 219 tests covering:
 
 **Triangle Tests (83 tests):**
 
@@ -497,6 +731,54 @@ The test suite includes 139 tests covering:
   - Zero angle calculations
   - Comparison with scaled circles
 
+**Rectangle Tests (80 tests):**
+
+- **TestRectangleBasics (10 tests):**
+  - Initialization with validation
+  - Area and perimeter calculations
+  
+- **TestRectangleGeometry (13 tests):**
+  - Diagonal, aspect ratio, and square detection
+  - Circumradius and inradius
+  - Diagonal angle calculations
+  
+- **TestRectangleTransformations (7 tests):**
+  - Scale to area maintaining aspect ratio
+  - Scale to fit within constraints
+  - Rotation operations
+  
+- **TestRectangleScaling (8 tests):**
+  - Multiplication and division operators
+  - In-place scaling operations
+  - Aspect ratio preservation
+  
+- **TestRectangleComparison (10 tests):**
+  - Equality and inequality
+  - Area-based comparisons
+  - Type checking in comparisons
+  
+- **TestRectangleStringRepresentation (3 tests):**
+  - **str** and **repr** methods
+  
+- **TestRectangleEdgeCases (6 tests):**
+  - Very small and large dimensions
+  - Chained scaling operations
+  - Extreme aspect ratios
+
+- **TestSquareBasics (7 tests):**
+  - Initialization and validation
+  - Area, perimeter, and square detection
+  
+- **TestSquareGeometry (7 tests):**
+  - Diagonal, circumradius, inradius
+  - Apothem calculations
+  - Aspect ratio and diagonal angles
+  
+- **TestSquareScaling (8 tests):**
+  - Area scaling operations
+  - Type preservation after scaling
+  - Square property maintenance
+
 ## Project Structure
 
 ``` code
@@ -509,12 +791,18 @@ The test suite includes 139 tests covering:
 │   │   └── tests/
 │   │       ├── __init__.py
 │   │       └── test_triangle.py # Comprehensive test suite
-│   └── circle/
-│       ├── __init__.py          # Exports Circle
-│       ├── circle.py            # Circle class implementation
+│   ├── circle/
+│   │   ├── __init__.py          # Exports Circle
+│   │   ├── circle.py            # Circle class implementation
+│   │   └── tests/
+│   │       ├── __init__.py
+│   │       └── test_circle.py   # Comprehensive test suite
+│   └── rectangles/
+│       ├── __init__.py          # Package marker
+│       ├── rectangle.py         # Rectangle and Square class implementations
 │       └── tests/
 │           ├── __init__.py
-│           └── test_circle.py   # Comprehensive test suite
+│           └── test_rectangle.py # Comprehensive test suite
 ├── pyproject.toml
 ├── dev-requirements.txt
 ├── Makefile
@@ -536,6 +824,13 @@ Triangle (ABC)
 
 ``` code
 Circle (standalone class)
+```
+
+**Rectangles:**
+
+``` code
+Rectangle
+└── Square
 ```
 
 The `Triangle` base class provides common functionality:
@@ -561,7 +856,7 @@ Each subclass implements:
 
 ```bash
 # Check for type errors
-python -m mypy shapes/triangle/triangle.py shapes/circle/circle.py
+python -m mypy shapes/triangle/triangle.py shapes/circle/circle.py shapes/rectangles/rectangle.py
 ```
 
 ## Design Notes for the Shapes Package
