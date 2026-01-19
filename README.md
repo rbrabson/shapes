@@ -308,7 +308,7 @@ The test suite includes 83 tests covering:
 
 ## Project Structure
 
-```
+``` bash
 .
 ├── triangles/
 │   ├── __init__.py          # Exports Triangle, RightTriangle, AcuteTriangle, ObtuseTriangle
@@ -322,7 +322,7 @@ The test suite includes 83 tests covering:
 
 ## Class Hierarchy
 
-```
+``` bash
 Triangle (ABC)
 ├── RightTriangle
 ├── AcuteTriangle
