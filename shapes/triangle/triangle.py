@@ -182,20 +182,6 @@ class RightTriangle(Triangle):
         new /= scale
         return new
 
-    def __eq__(self, other) -> bool:
-        """Equality comparison for RightTriangle"""
-        if not isinstance(other, RightTriangle):
-            raise TypeError(
-                "Can only compare RightTriangle with another RightTriangle")
-        return super().__eq__(other)
-
-    def __lt__(self, other) -> bool:
-        """Less-than comparison for RightTriangle based on area"""
-        if not isinstance(other, RightTriangle):
-            raise TypeError(
-                "Can only compare RightTriangle with another RightTriangle")
-        return super().__lt__(other)
-
     def __str__(self) -> str:
         """String representation of the RightTriangle"""
         return f"RightTriangle(a={self.a}, b={self.b}, c={self.c})"
@@ -269,20 +255,6 @@ class AcuteTriangle(Triangle):
         new = AcuteTriangle(self.a, self.b, self.c)
         new /= scale
         return new
-
-    def __eq__(self, other) -> bool:
-        """Equality comparison for AcuteTriangle"""
-        if not isinstance(other, AcuteTriangle):
-            raise TypeError(
-                "Can only compare AcuteTriangle with another AcuteTriangle")
-        return super().__eq__(other)
-
-    def __lt__(self, other) -> bool:
-        """Less-than comparison for AcuteTriangle based on area"""
-        if not isinstance(other, AcuteTriangle):
-            raise TypeError(
-                "Can only compare AcuteTriangle with another AcuteTriangle")
-        return super().__lt__(other)
 
     def __str__(self) -> str:
         """String representation of the AcuteTriangle"""
@@ -360,20 +332,6 @@ class ObtuseTriangle(Triangle):
         new = ObtuseTriangle(self.a, self.b, self.c)
         new /= scale
         return new
-
-    def __eq__(self, other) -> bool:
-        """Equality comparison for ObtuseTriangle"""
-        if not isinstance(other, ObtuseTriangle):
-            raise TypeError(
-                "Can only compare ObtuseTriangle with another ObtuseTriangle")
-        return super().__eq__(other)
-
-    def __lt__(self, other) -> bool:
-        """Less-than comparison for ObtuseTriangle based on area"""
-        if not isinstance(other, ObtuseTriangle):
-            raise TypeError(
-                "Can only compare ObtuseTriangle with another ObtuseTriangle")
-        return super().__lt__(other)
 
     def __str__(self) -> str:
         """String representation of the ObtuseTriangle"""
