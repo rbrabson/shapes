@@ -39,28 +39,28 @@ class Circle:
     def arc_length(self, angle: int | float) -> float:
         """ Calculate the arc length for a given angle in radians
             Args:
-                angle (float): angle in radians
+                angle: angle in radians
         """
         return self._radius * float(angle)
 
     def sector_area(self, angle: int | float) -> float:
         """ Calculate the area of a sector for a given angle in radians
             Args:
-                angle (float): angle in radians
+                angle: angle in radians
         """
         return 0.5 * self._radius ** 2 * float(angle)
 
     def chord_length(self, angle: int | float) -> float:
         """ Calculate the length of a chord for a given central angle in radians
             Args:
-                angle (float): central angle in radians
+                angle: central angle in radians
         """
         return 2 * self._radius * math.sin(float(angle) / 2)
 
     def segment_area(self, angle: int | float) -> float:
         """ Calculate the area of a circular segment for a given angle in radians
             Args:
-                angle (float): central angle in radians
+                angle: central angle in radians
         """
         return 0.5 * self._radius ** 2 * (float(angle) - math.sin(float(angle)))
 
