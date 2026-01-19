@@ -12,7 +12,7 @@ class Circle:
     def __init__(self, radius: int | float) -> None:
         """ Initialize the Circle with a radius
             Args:
-                radius (float): radius of the circle
+                radius: radius of the circle
             Raises:
                 ValueError: if radius is not positive
         """
