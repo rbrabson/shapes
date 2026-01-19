@@ -1,4 +1,5 @@
 """ Module to represent and calculate properties of circles """
+
 from functools import total_ordering
 from typing import Self
 import math
