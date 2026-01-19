@@ -58,7 +58,7 @@ class Triangle(ABC):
         return self
 
     def __eq__(self, other) -> bool:
-        """Equality comparison for Triangle"""
+        """Equality comparison for Triangle based on the side lengths"""
         if not isinstance(other, Triangle):
             raise TypeError("Can only compare Triangle with another Triangle")
         return (
