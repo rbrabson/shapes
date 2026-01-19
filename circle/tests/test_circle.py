@@ -10,12 +10,12 @@ class TestCircleBasics:
     def test_initialization(self):
         """Test circle initialization"""
         circle = Circle(5)
-        assert circle.radius == 5
+        assert circle.radius() == 5
 
     def test_initialization_float(self):
         """Test circle initialization with float"""
         circle = Circle(3.5)
-        assert circle.radius == 3.5
+        assert circle.radius() == 3.5
 
     def test_initialization_negative_radius(self):
         """Test that negative radius raises ValueError"""
@@ -126,7 +126,7 @@ class TestCircleScaling:
         """Test scaling area by 4"""
         circle = Circle(3)
         scaled = circle * 4
-        assert math.isclose(scaled.radius, 6)
+        assert math.isclose(scaled.radius(), 6)
         assert math.isclose(scaled.area(), circle.area() * 4)
 
     def test_divide_by_2(self):
@@ -139,7 +139,7 @@ class TestCircleScaling:
         """Test scaling area down by 4"""
         circle = Circle(8)
         scaled = circle / 4
-        assert math.isclose(scaled.radius, 4)
+        assert math.isclose(scaled.radius(), 4)
         assert math.isclose(scaled.area(), circle.area() / 4)
 
     def test_inplace_multiply(self):
@@ -239,13 +239,13 @@ class TestCircleEdgeCases:
     def test_very_small_radius(self):
         """Test circle with very small radius"""
         circle = Circle(0.001)
-        assert circle.radius == 0.001
+        assert circle.radius() == 0.001
         assert circle.area() > 0
 
     def test_very_large_radius(self):
         """Test circle with very large radius"""
         circle = Circle(1e6)
-        assert circle.radius == 1e6
+        assert circle.radius() == 1e6
         assert circle.area() > 0
 
     def test_scaling_chain(self):

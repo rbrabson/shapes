@@ -17,51 +17,55 @@ class Circle:
         """
         if radius <= 0:
             raise ValueError("Radius must be positive")
-        self.radius: float = float(radius)
+        self._radius: float = float(radius)
+
+    def radius(self) -> float:
+        """ Get the radius of the circle """
+        return self._radius
 
     def diameter(self) -> float:
         """ Calculate the diameter of the circle """
-        return 2 * self.radius
+        return 2 * self._radius
 
     def circumference(self) -> float:
         """ Calculate the circumference of the circle """
-        return 2 * math.pi * self.radius
+        return 2 * math.pi * self._radius
 
     def area(self) -> float:
         """ Calculate the area of the circle """
-        return math.pi * self.radius ** 2
+        return math.pi * self._radius ** 2
 
-    def arc_length(self, angle: float) -> float:
+    def arc_length(self, angle: int | float) -> float:
         """ Calculate the arc length for a given angle in radians
             Args:
                 angle (float): angle in radians
         """
-        return self.radius * angle
+        return self._radius * float(angle)
 
-    def sector_area(self, angle: float) -> float:
+    def sector_area(self, angle: int | float) -> float:
         """ Calculate the area of a sector for a given angle in radians
             Args:
                 angle (float): angle in radians
         """
-        return 0.5 * self.radius ** 2 * angle
+        return 0.5 * self._radius ** 2 * float(angle)
 
-    def chord_length(self, angle: float) -> float:
+    def chord_length(self, angle: int | float) -> float:
         """ Calculate the length of a chord for a given central angle in radians
             Args:
                 angle (float): central angle in radians
         """
-        return 2 * self.radius * math.sin(angle / 2)
+        return 2 * self._radius * math.sin(float(angle) / 2)
 
-    def segment_area(self, angle: float) -> float:
+    def segment_area(self, angle: int | float) -> float:
         """ Calculate the area of a circular segment for a given angle in radians
             Args:
                 angle (float): central angle in radians
         """
-        return 0.5 * self.radius ** 2 * (angle - math.sin(angle))
+        return 0.5 * self._radius ** 2 * (float(angle) - math.sin(float(angle)))
 
-    def __imul__(self, scale: float) -> Self:
+    def __imul__(self, scale: int | float) -> Self:
         """ In-place scale the area of the circle by a factor """
-        self.radius *= math.sqrt(scale)
+        self._radius *= math.sqrt(scale)
         return self
 
     def __itruediv__(self, scale: int | float) -> Self:
@@ -71,13 +75,13 @@ class Circle:
 
     def __mul__(self, scale: int | float) -> 'Circle':
         """ Scale the area of the circle by a factor """
-        new = Circle(self.radius)
+        new = Circle(self._radius)
         new *= scale
         return new
 
     def __truediv__(self, scale: int | float) -> 'Circle':
         """ Scale the area of the circle down by a factor """
-        new = Circle(self.radius)
+        new = Circle(self._radius)
         new /= scale
         return new
 
@@ -85,7 +89,7 @@ class Circle:
         """ Equality comparison for Circle """
         if not isinstance(other, Circle):
             return NotImplemented
-        return math.isclose(self.radius, other.radius)
+        return math.isclose(self._radius, other.radius())
 
     def __lt__(self, other) -> bool:
         """ Less-than comparison for Circle based on area """
@@ -95,8 +99,8 @@ class Circle:
 
     def __str__(self) -> str:
         """ String representation of the Circle """
-        return f"Circle(radius={self.radius})"
+        return f"Circle(radius={self._radius})"
 
     def __repr__(self) -> str:
         """ String representation of the Circle """
-        return f"radius={self.radius}"
+        return f"radius={self._radius}"
